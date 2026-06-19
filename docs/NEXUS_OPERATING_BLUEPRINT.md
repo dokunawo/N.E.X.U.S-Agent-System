@@ -115,6 +115,13 @@ Sentinel:
 - Safety and guardian agent.
 - Reviews risk, permissions, privacy, and sensitive actions.
 
+Steward:
+
+- Financial tracking and resource guidance agent.
+- Tracks budgets, expenses, savings goals, and investment awareness.
+- Gives practical financial guidance within safe limits.
+- Cannot move money, trade investments, connect financial accounts, or make financial decisions for Daniel without explicit approval.
+
 Link:
 
 - API and integration agent.

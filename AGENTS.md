@@ -34,6 +34,7 @@ Brand line: Everything Connects Here.
 - Seeker: research.
 - Analyst: data analysis.
 - Sentinel: safety, risk, and system protection.
+- Steward: financial tracking, budgeting, savings, investment awareness, and practical guidance.
 - Link: API and integration design.
 - Keeper: storage, database, and memory structure.
 - Echo: conversation and user-facing communication.
@@ -84,7 +85,8 @@ Approvals should support spoken confirmation, one-click approval, and written co
 - Phase 6: live updates and agent activity streaming.
 - Phase 7: voice input, spoken responses, and wake phrases.
 - Phase 8: self-learning and self-improvement with strong approval boundaries.
-- Phase 9: cloud deployment with local execution support.
+- Phase 9: Steward financial tracking and budgeting with strong approval boundaries.
+- Phase 10: cloud deployment with local execution support.
 
 ## Technical Defaults
 

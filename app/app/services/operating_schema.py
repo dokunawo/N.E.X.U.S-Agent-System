@@ -8,6 +8,8 @@ TASK_STATUSES = [
     "planning",
     "running",
     "waiting_for_approval",
+    "approved",
+    "rejected",
     "completed",
     "blocked",
 ]
@@ -16,6 +18,7 @@ AGENT_LOG_STATUSES = [
     "standby",
     "ready",
     "online",
+    "learning",
     "complete",
     "attention",
     "approval_required",
@@ -35,6 +38,8 @@ MEMORY_KINDS = [
     "run_summary",
     "decision",
     "preference",
+    "learning_insight",
+    "financial_note",
     "risk_note",
     "integration_note",
 ]
@@ -92,6 +97,15 @@ AGENT_ROSTER = [
         "purpose": "Guard privacy, permissions, sensitive actions, and risk.",
         "access_scope": "Can review any proposed action for risk.",
         "risk_boundary": "Cannot approve actions for Daniel; it can only request approval.",
+        "default_status": "ready",
+    },
+    {
+        "id": "steward",
+        "name": "Steward",
+        "role": "Financial tracking and resource guidance",
+        "purpose": "Track budgets, spending patterns, savings, investments, and practical financial signals.",
+        "access_scope": "Can organize financial records Daniel enters or explicitly connects.",
+        "risk_boundary": "Must not move money, trade investments, connect financial accounts, or provide professional financial advice without clear approval boundaries.",
         "default_status": "ready",
     },
     {
@@ -181,6 +195,78 @@ DATA_SOURCES = [
         "privacy_level": "private",
         "detail": "Planned source for reminders, todos, and follow-up tracking.",
     },
+    {
+        "id": "notion_expenses",
+        "name": "Notion expense tracker",
+        "kind": "personal_integration",
+        "status": "planned",
+        "privacy_level": "sensitive",
+        "detail": "Planned source for budget and expense tracking after explicit approval.",
+    },
+    {
+        "id": "manual_finance",
+        "name": "Manual finance entries",
+        "kind": "local_input",
+        "status": "active",
+        "privacy_level": "sensitive",
+        "detail": "Local budget, expense, savings, and investment entries Daniel types into N.E.X.U.S.",
+    },
+    {
+        "id": "market_context",
+        "name": "Market and economy context",
+        "kind": "research_source",
+        "status": "planned",
+        "privacy_level": "public",
+        "detail": "Planned public research source for market and economy awareness.",
+    },
+]
+
+LEARNING_SOURCES = [
+    {
+        "id": "local_goals",
+        "name": "Local goals and prompts",
+        "kind": "local_behavior",
+        "status": "active",
+        "privacy_level": "private",
+        "consent_required": False,
+        "detail": "Learns from goals Daniel types directly into N.E.X.U.S.",
+    },
+    {
+        "id": "approval_history",
+        "name": "Approval decisions",
+        "kind": "local_behavior",
+        "status": "active",
+        "privacy_level": "private",
+        "consent_required": False,
+        "detail": "Learns from Daniel's approve and reject decisions.",
+    },
+    {
+        "id": "connected_plugins",
+        "name": "Connected plugins",
+        "kind": "personal_integration",
+        "status": "approval_required",
+        "privacy_level": "sensitive",
+        "consent_required": True,
+        "detail": "Future learning from Gmail, Calendar, Notes, Tasks, Notion, or other approved connectors.",
+    },
+    {
+        "id": "public_strategy_sources",
+        "name": "Public strategy sources",
+        "kind": "research_source",
+        "status": "planned",
+        "privacy_level": "public",
+        "consent_required": False,
+        "detail": "Future research over public strategy, planning, finance, business, and market sources.",
+    },
+]
+
+BUDGET_CATEGORIES = [
+    {"name": "Housing", "category_type": "needs", "monthly_limit": 0.0},
+    {"name": "Food", "category_type": "needs", "monthly_limit": 0.0},
+    {"name": "Transportation", "category_type": "needs", "monthly_limit": 0.0},
+    {"name": "Subscriptions", "category_type": "wants", "monthly_limit": 0.0},
+    {"name": "Savings", "category_type": "future", "monthly_limit": 0.0},
+    {"name": "Investing", "category_type": "future", "monthly_limit": 0.0},
 ]
 
 

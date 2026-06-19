@@ -19,6 +19,9 @@
 
         <nav class="nav-list" aria-label="Dashboard sections">
           <a class="active" href="#overview">Overview</a>
+          <a href="#approvals">Approvals</a>
+          <a href="#learning">Learning</a>
+          <a href="#steward">Steward</a>
           <a href="#agents">Agents</a>
           <a href="#memory">Memory</a>
         </nav>
@@ -76,6 +79,43 @@
               </div>
             </div>
             <p id="summary">Run a goal to generate an operations brief.</p>
+          </article>
+        </section>
+
+        <section class="approval-band" id="approvals">
+          <article class="panel approval-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Sentinel</span>
+                <h3>Approvals</h3>
+              </div>
+              <span id="approval-count" class="status-pill">0 pending</span>
+            </div>
+            <div id="approval-list" class="approval-list"></div>
+          </article>
+        </section>
+
+        <section class="insight-grid">
+          <article class="panel" id="learning">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Keeper</span>
+                <h3>Learning</h3>
+              </div>
+              <span id="learning-count" class="status-pill">0 insights</span>
+            </div>
+            <div id="learning-list" class="learning-list"></div>
+          </article>
+
+          <article class="panel" id="steward">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Steward</span>
+                <h3>Finance</h3>
+              </div>
+              <span id="finance-mode" class="status-pill">manual</span>
+            </div>
+            <div id="finance-summary" class="finance-summary"></div>
           </article>
         </section>
 

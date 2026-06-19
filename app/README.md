@@ -96,6 +96,14 @@ Without `OPENAI_API_KEY`, the app keeps working in mock mode.
 - `GET /api/memory` - recent memory log
 - `GET /api/memory/entries` - structured memory entries
 - `GET /api/approvals` - pending approval requests
+- `GET /api/learning` - local learning sources and active insights
+- `GET /api/finance` - Steward finance snapshot
+- `POST /api/finance/expenses` - add a manual expense
+- `POST /api/finance/budget-categories` - set a manual budget category
+- `POST /api/finance/savings-goals` - add a savings goal
+- `POST /api/finance/investments` - add a manual investment position
+- `POST /api/approvals/{id}/approve` - mark an approval request as approved
+- `POST /api/approvals/{id}/reject` - mark an approval request as rejected
 - `DELETE /api/memory` - clear memory log
 
 ## Example Goal

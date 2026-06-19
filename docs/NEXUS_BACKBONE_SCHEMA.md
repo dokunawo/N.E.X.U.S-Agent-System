@@ -107,6 +107,66 @@ Planned sources:
 
 This lets Link connect real data later without guessing where it belongs.
 
+### learning_sources
+
+The allowed places N.E.X.U.S can learn from.
+
+Current active sources:
+
+- Local goals and prompts.
+- Approval decisions.
+
+Approval-gated future sources:
+
+- Connected plugins.
+- Personal integrations.
+
+This keeps learning curious but controlled.
+
+### learning_insights
+
+The current things N.E.X.U.S believes it is learning about Daniel.
+
+Each insight has:
+
+- Category.
+- Title.
+- Detail.
+- Confidence.
+- Source.
+- Evidence.
+- Privacy level.
+
+These are not secret rules. They are inspectable and can be corrected later.
+
+### budget_categories
+
+Steward's budget structure.
+
+Each category has:
+
+- Name.
+- Type.
+- Monthly limit.
+- Spent amount.
+- Status.
+
+### expenses
+
+Manual expense entries for Steward.
+
+No bank account connection is required.
+
+### savings_goals
+
+Manual savings targets.
+
+### investment_positions
+
+Manual investment awareness records.
+
+Steward can track and summarize these. It cannot trade or move money.
+
 ## API Endpoints
 
 ```text
@@ -117,6 +177,14 @@ GET /api/logs
 GET /api/memory
 GET /api/memory/entries
 GET /api/approvals
+GET /api/learning
+GET /api/finance
+POST /api/finance/expenses
+POST /api/finance/budget-categories
+POST /api/finance/savings-goals
+POST /api/finance/investments
+POST /api/approvals/{id}/approve
+POST /api/approvals/{id}/reject
 ```
 
 The existing dashboard endpoints still work:
@@ -137,6 +205,7 @@ When `POST /api/run` receives a goal:
 4. Agent log rows are created.
 5. A memory entry is saved.
 6. If risk is medium or higher, Sentinel creates a pending approval request.
+7. Daniel can approve or reject the approval request from the dashboard.
 
 No external account is connected yet.
 

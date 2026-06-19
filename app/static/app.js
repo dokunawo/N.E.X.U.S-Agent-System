@@ -1,5 +1,6 @@
 const state = {
   analytics: null,
+  operating: null,
   lastResult: null,
 };
 
@@ -11,6 +12,12 @@ const elements = {
   generatedAt: document.querySelector("#generated-at"),
   summary: document.querySelector("#summary"),
   agentEvents: document.querySelector("#agent-events"),
+  approvalCount: document.querySelector("#approval-count"),
+  approvalList: document.querySelector("#approval-list"),
+  learningCount: document.querySelector("#learning-count"),
+  learningList: document.querySelector("#learning-list"),
+  financeMode: document.querySelector("#finance-mode"),
+  financeSummary: document.querySelector("#finance-summary"),
   suggestions: document.querySelector("#suggestions"),
   memoryList: document.querySelector("#memory-list"),
   chart: document.querySelector("#trend-chart"),
@@ -31,6 +38,15 @@ async function api(path, options = {}) {
   }
 
   return response.json();
+}
+
+function escapeHTML(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function renderMetrics(metrics) {
@@ -110,8 +126,8 @@ function renderEvents(events = []) {
     .map(
       (event) => `
         <div class="event ${event.status}">
-          <strong>${event.agent} - ${event.status}</strong>
-          <p>${event.message}</p>
+          <strong>${escapeHTML(event.agent)} - ${escapeHTML(event.status)}</strong>
+          <p>${escapeHTML(event.message)}</p>
         </div>
       `,
     )
@@ -120,8 +136,112 @@ function renderEvents(events = []) {
 
 function renderSuggestions(suggestions = []) {
   elements.suggestions.innerHTML = suggestions
-    .map((suggestion) => `<li>${suggestion}</li>`)
+    .map((suggestion) => `<li>${escapeHTML(suggestion)}</li>`)
     .join("");
+}
+
+function renderApprovals(approvals = []) {
+  const count = approvals.length;
+  elements.approvalCount.textContent = `${count} pending`;
+
+  if (!count) {
+    elements.approvalList.innerHTML = `
+      <div class="approval-empty">
+        <strong>No pending approvals</strong>
+        <p>Sentinel will hold sensitive actions here before anything external happens.</p>
+      </div>
+    `;
+    return;
+  }
+
+  elements.approvalList.innerHTML = approvals
+    .map(
+      (approval) => `
+        <article class="approval-item ${escapeHTML(approval.risk_level)}">
+          <div>
+            <span class="approval-meta">${escapeHTML(approval.risk_level)} risk - ${escapeHTML(approval.approval_type)}</span>
+            <strong>${escapeHTML(approval.title)}</strong>
+            <p>${escapeHTML(approval.requested_action)}</p>
+            <small>${escapeHTML(approval.reason)}</small>
+          </div>
+          <div class="approval-actions">
+            <button class="small-button approve-button" type="button" data-action="approve" data-approval-id="${approval.id}">Approve</button>
+            <button class="small-button reject-button" type="button" data-action="reject" data-approval-id="${approval.id}">Reject</button>
+          </div>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+function formatMoney(value = 0) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function renderLearning(learning = {}) {
+  const insights = learning.insights || [];
+  elements.learningCount.textContent = `${insights.length} insights`;
+
+  if (!insights.length) {
+    elements.learningList.innerHTML = `
+      <div class="insight-empty">
+        <strong>No learning signals yet</strong>
+        <p>N.E.X.U.S will learn from local goals first. Connected plugin learning stays approval-gated.</p>
+      </div>
+    `;
+    return;
+  }
+
+  elements.learningList.innerHTML = insights
+    .slice(0, 5)
+    .map(
+      (insight) => `
+        <article class="insight-item">
+          <span>${escapeHTML(insight.category)} - ${Math.round(insight.confidence * 100)}%</span>
+          <strong>${escapeHTML(insight.title)}</strong>
+          <p>${escapeHTML(insight.detail)}</p>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+function renderFinance(finance = {}) {
+  const summary = finance.summary || {};
+  elements.financeMode.textContent = summary.mode || "manual";
+
+  elements.financeSummary.innerHTML = `
+    <div class="finance-metrics">
+      <div>
+        <span>Budget</span>
+        <strong>${formatMoney(summary.monthly_budget || 0)}</strong>
+      </div>
+      <div>
+        <span>Spent</span>
+        <strong>${formatMoney(summary.spent_this_month || 0)}</strong>
+      </div>
+      <div>
+        <span>Savings</span>
+        <strong>${formatMoney(summary.savings_current_total || 0)}</strong>
+      </div>
+      <div>
+        <span>Invested</span>
+        <strong>${formatMoney(summary.investment_value_total || 0)}</strong>
+      </div>
+    </div>
+    <p>${escapeHTML(finance.guardrail || "Steward is running in manual mode.")}</p>
+  `;
+}
+
+function renderOperating(operating = {}) {
+  state.operating = operating;
+  renderApprovals(operating.approvals || []);
+  renderLearning(operating.learning || {});
+  renderFinance(operating.finance || {});
 }
 
 function renderMemory(runs = []) {
@@ -134,7 +254,7 @@ function renderMemory(runs = []) {
     .map(
       (run) => `
         <div class="memory-item">
-          <strong>${run.goal}</strong>
+          <strong>${escapeHTML(run.goal)}</strong>
           <p>${new Date(run.created_at).toLocaleString()}</p>
         </div>
       `,
@@ -169,6 +289,7 @@ async function loadDashboard() {
     "Connect Calendar, Gmail, Notes, and Tasks first.",
     "Add voice after the dashboard and real data loop works.",
   ]);
+  renderOperating(dashboard.operating);
   renderMemory(dashboard.memory);
 }
 
@@ -185,7 +306,21 @@ async function runGoal(goal) {
   renderAnalytics(result.analytics);
   renderEvents(result.events);
   renderSuggestions(result.suggestions);
+  renderOperating(result.operating);
   renderMemory(result.recent_memory);
+}
+
+async function decideApproval(approvalId, action) {
+  const decision = action === "approve" ? "approved" : "rejected";
+  const result = await api(`/api/approvals/${approvalId}/${action}`, {
+    method: "POST",
+    body: JSON.stringify({
+      decision_note: `Daniel ${decision} this request from the dashboard.`,
+    }),
+  });
+
+  renderOperating(result.operating);
+  elements.summary.textContent = `Sentinel recorded approval request ${approvalId} as ${decision}. No external action was executed.`;
 }
 
 elements.form.addEventListener("submit", async (event) => {
@@ -208,8 +343,22 @@ elements.refresh.addEventListener("click", () => {
 });
 
 elements.clearMemory.addEventListener("click", async () => {
-  await api("/api/memory", { method: "DELETE" });
+  const result = await api("/api/memory", { method: "DELETE" });
+  renderOperating(result.operating);
   renderMemory([]);
+});
+
+elements.approvalList.addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+
+  button.disabled = true;
+  try {
+    await decideApproval(button.dataset.approvalId, button.dataset.action);
+  } catch (error) {
+    elements.summary.textContent = error.message;
+    button.disabled = false;
+  }
 });
 
 loadDashboard().catch((error) => {

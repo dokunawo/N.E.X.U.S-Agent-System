@@ -33,7 +33,7 @@ Decisions:
 - Tagline: Everything Connects Here.
 - Personality: calm command center, sharp operator, creative partner, guardian.
 - Primary wake phrase: "Nexus, come online."
-- Agent roster: Architect, Engineer, Seeker, Analyst, Sentinel, Link, Keeper, Echo, Pilot.
+- Agent roster: Architect, Engineer, Seeker, Analyst, Sentinel, Steward, Link, Keeper, Echo, Pilot.
 
 ## Phase 3: Task, Agent, Log, And Approval Structure
 
@@ -147,7 +147,26 @@ Safety rule:
 
 Self-improvement should be logged, reversible, and approval-gated when it changes important behavior.
 
-## Phase 9: Hybrid Cloud And Local Execution
+## Phase 9: Steward Financial Tracking
+
+Goal:
+
+Give N.E.X.U.S a dedicated financial tracking and budgeting agent.
+
+Steward should help with:
+
+- Budgets.
+- Spending awareness.
+- Savings goals.
+- Investment awareness.
+- Manual expense tracking.
+- Future Notion expense tracking after approval.
+
+Safety rule:
+
+Steward can track, analyze, and guide. It cannot move money, trade, connect financial accounts, or make financial decisions without explicit approval.
+
+## Phase 10: Hybrid Cloud And Local Execution
 
 Goal:
 

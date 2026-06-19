@@ -100,6 +100,12 @@ class AnalyticsService:
                     "confidence": 0.84,
                 },
                 {
+                    "name": "Steward",
+                    "status": "ready",
+                    "task": "Ready to track budgets, spending, savings, and investment context in manual mode.",
+                    "confidence": 0.86,
+                },
+                {
                     "name": "Link",
                     "status": "standby",
                     "task": "Waiting for Calendar, Gmail, Notes, and Tasks connection work.",

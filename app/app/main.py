@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -37,6 +37,41 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 class RunRequest(BaseModel):
     goal: str = Field(..., min_length=2, max_length=500)
+
+
+class ApprovalDecision(BaseModel):
+    decision_note: str = Field("", max_length=500)
+
+
+class ExpenseRequest(BaseModel):
+    amount: float = Field(..., gt=0)
+    category: str = Field(..., min_length=1, max_length=80)
+    description: str = Field("", max_length=240)
+    spent_at: str | None = Field(None, max_length=80)
+
+
+class BudgetCategoryRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=80)
+    monthly_limit: float = Field(..., ge=0)
+    category_type: str = Field("manual", max_length=60)
+
+
+class SavingsGoalRequest(BaseModel):
+    title: str = Field(..., min_length=1, max_length=120)
+    target_amount: float = Field(..., gt=0)
+    current_amount: float = Field(0, ge=0)
+    target_date: str | None = Field(None, max_length=80)
+    notes: str = Field("", max_length=300)
+
+
+class InvestmentPositionRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=120)
+    symbol: str | None = Field(None, max_length=20)
+    position_type: str = Field("manual", max_length=60)
+    current_value: float = Field(0, ge=0)
+    cost_basis: float = Field(0, ge=0)
+    risk_level: str = Field("unknown", max_length=60)
+    notes: str = Field("", max_length=300)
 
 
 @app.get("/")
@@ -102,6 +137,97 @@ def get_memory_entries() -> dict:
 @app.get("/api/approvals")
 def get_approvals() -> dict:
     return {"approvals": memory.pending_approvals(limit=25)}
+
+
+@app.get("/api/learning")
+def get_learning() -> dict:
+    return memory.learning_snapshot(limit=25)
+
+
+@app.get("/api/finance")
+def get_finance() -> dict:
+    return memory.finance_snapshot(limit=25)
+
+
+@app.post("/api/finance/expenses")
+def add_expense(request: ExpenseRequest) -> dict:
+    expense = memory.add_expense(
+        amount=request.amount,
+        category=request.category,
+        description=request.description,
+        spent_at=request.spent_at,
+    )
+    return {"ok": True, "expense": expense, "finance": memory.finance_snapshot(limit=8)}
+
+
+@app.post("/api/finance/budget-categories")
+def set_budget_category(request: BudgetCategoryRequest) -> dict:
+    category = memory.set_budget_category(
+        name=request.name,
+        monthly_limit=request.monthly_limit,
+        category_type=request.category_type,
+    )
+    return {"ok": True, "category": category, "finance": memory.finance_snapshot(limit=8)}
+
+
+@app.post("/api/finance/savings-goals")
+def add_savings_goal(request: SavingsGoalRequest) -> dict:
+    goal = memory.add_savings_goal(
+        title=request.title,
+        target_amount=request.target_amount,
+        current_amount=request.current_amount,
+        target_date=request.target_date,
+        notes=request.notes,
+    )
+    return {"ok": True, "savings_goal": goal, "finance": memory.finance_snapshot(limit=8)}
+
+
+@app.post("/api/finance/investments")
+def add_investment_position(request: InvestmentPositionRequest) -> dict:
+    position = memory.add_investment_position(
+        name=request.name,
+        symbol=request.symbol,
+        position_type=request.position_type,
+        current_value=request.current_value,
+        cost_basis=request.cost_basis,
+        risk_level=request.risk_level,
+        notes=request.notes,
+    )
+    return {"ok": True, "investment": position, "finance": memory.finance_snapshot(limit=8)}
+
+
+@app.post("/api/approvals/{approval_id}/approve")
+def approve_approval(approval_id: int, decision: ApprovalDecision) -> dict:
+    approval = memory.resolve_approval(
+        approval_id=approval_id,
+        decision="approved",
+        decision_note=decision.decision_note,
+    )
+    if approval is None:
+        raise HTTPException(status_code=404, detail="Approval request not found.")
+
+    return {
+        "ok": True,
+        "approval": approval,
+        "operating": memory.operating_snapshot(limit=8),
+    }
+
+
+@app.post("/api/approvals/{approval_id}/reject")
+def reject_approval(approval_id: int, decision: ApprovalDecision) -> dict:
+    approval = memory.resolve_approval(
+        approval_id=approval_id,
+        decision="rejected",
+        decision_note=decision.decision_note,
+    )
+    if approval is None:
+        raise HTTPException(status_code=404, detail="Approval request not found.")
+
+    return {
+        "ok": True,
+        "approval": approval,
+        "operating": memory.operating_snapshot(limit=8),
+    }
 
 
 @app.delete("/api/memory")

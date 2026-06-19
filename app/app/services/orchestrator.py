@@ -98,6 +98,7 @@ class Orchestrator:
             ReliabilityAgent(),
             StandbyAgent("Engineer", "No code action required for this status request."),
             StandbyAgent("Seeker", "No external research source connected yet."),
+            StandbyAgent("Steward", "Tracking financial context in manual mode until accounts are approved."),
             StandbyAgent("Link", "Integration work is queued for Calendar, Gmail, Notes, and Tasks."),
             StandbyAgent("Keeper", "Prepared the run for memory storage."),
             StandbyAgent("Echo", "Prepared the user-facing summary language."),
@@ -111,10 +112,20 @@ class Orchestrator:
     def handle_goal(self, goal: str) -> dict:
         snapshot = self.analytics.get_snapshot()
         risk = self._assess_risk(goal)
+        learning_signals = self.memory.record_learning_from_goal(goal)
 
         events = [agent.run(snapshot).as_dict() for agent in self.agents]
+        if learning_signals:
+            events.append(
+                AgentEvent(
+                    "Keeper",
+                    "learning",
+                    f"Saved {len(learning_signals)} local learning signal(s) from this request.",
+                ).as_dict()
+            )
         strategy_event, suggestions = self.strategy.run(snapshot)
         events.append(strategy_event.as_dict())
+        suggestions.append("Let Steward build a starter budget once monthly income and major expenses are entered.")
 
         approval = None
         task_status = "completed"
@@ -147,6 +158,7 @@ class Orchestrator:
             "events": events,
             "suggestions": suggestions,
             "risk": risk,
+            "learning_signals": learning_signals,
             "mode": self.mode,
         }
         saved = self.memory.save_run(
@@ -207,6 +219,12 @@ class Orchestrator:
                     "connect calendar",
                     "connect account",
                     "connect tasks",
+                    "connect bank",
+                    "connect notion",
+                    "trade stock",
+                    "buy stock",
+                    "sell stock",
+                    "move money",
                     "share private",
                     "expose private",
                     "post publicly",
@@ -221,6 +239,9 @@ class Orchestrator:
                     "private information",
                     "oauth",
                     "external account",
+                    "notion",
+                    "bank",
+                    "investment account",
                 ],
             ),
         ]
