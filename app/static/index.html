@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>N.E.X.U.S Dashboard MVP</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">N</span>
+          <div>
+            <h1>N.E.X.U.S</h1>
+            <p id="mode">Local mode</p>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Dashboard sections">
+          <a class="active" href="#overview">Overview</a>
+          <a href="#agents">Agents</a>
+          <a href="#memory">Memory</a>
+        </nav>
+
+        <section class="system-panel">
+          <span class="panel-label">System</span>
+          <strong id="health-state">Checking</strong>
+          <p id="health-detail">FastAPI backend</p>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Everything Connects Here</span>
+            <h2>Command dashboard</h2>
+          </div>
+          <button id="refresh" class="icon-button" type="button" aria-label="Refresh dashboard">
+            <span aria-hidden="true">R</span>
+          </button>
+        </header>
+
+        <section class="prompt-row" id="overview">
+          <form id="goal-form">
+            <input
+              id="goal"
+              name="goal"
+              type="text"
+              autocomplete="off"
+              value="Nexus, status: what needs my attention today?"
+            />
+            <button type="submit">Run</button>
+          </form>
+        </section>
+
+        <section class="metric-grid" id="metrics" aria-live="polite"></section>
+
+        <section class="main-grid">
+          <article class="panel chart-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Trend</span>
+                <h3>Active users</h3>
+              </div>
+              <span id="generated-at" class="timestamp">Waiting</span>
+            </div>
+            <canvas id="trend-chart" width="900" height="320"></canvas>
+          </article>
+
+          <article class="panel response-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">N.E.X.U.S</span>
+                <h3>Answer</h3>
+              </div>
+            </div>
+            <p id="summary">Run a goal to generate an operations brief.</p>
+          </article>
+        </section>
+
+        <section class="detail-grid" id="agents">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Agents</span>
+                <h3>Activity</h3>
+              </div>
+            </div>
+            <div id="agent-events" class="timeline"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Next</span>
+                <h3>Suggestions</h3>
+              </div>
+            </div>
+            <ul id="suggestions" class="suggestions"></ul>
+          </article>
+
+          <article class="panel" id="memory">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Memory</span>
+                <h3>Recent runs</h3>
+              </div>
+              <button id="clear-memory" class="small-button" type="button">Clear</button>
+            </div>
+            <div id="memory-list" class="memory-list"></div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
