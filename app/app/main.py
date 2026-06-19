@@ -2,7 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -13,6 +13,7 @@ from app.services.orchestrator import Orchestrator
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC_DIR = ROOT / "static"
+COUNCIL_DIR = ROOT.parent / "round-table"
 
 analytics = AnalyticsService()
 memory = MemoryStore()
@@ -33,6 +34,7 @@ app.add_middleware(
 )
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/council", StaticFiles(directory=COUNCIL_DIR, html=True), name="council")
 
 
 class RunRequest(BaseModel):
@@ -77,6 +79,11 @@ class InvestmentPositionRequest(BaseModel):
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/council")
+def council() -> RedirectResponse:
+    return RedirectResponse(url="/council/")
 
 
 @app.get("/api/health")

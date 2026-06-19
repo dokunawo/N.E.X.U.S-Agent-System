@@ -89,6 +89,7 @@ Without `OPENAI_API_KEY`, the app keeps working in mock mode.
 - `GET /api/health` - service status
 - `GET /api/dashboard` - initial analytics and memory snapshot
 - `POST /api/run` - run the orchestrator for a goal
+- `GET /council/` - The Round Table council UI with separate agent pages
 - `GET /api/schema` - current operating schema values
 - `GET /api/agents` - official agent roster
 - `GET /api/tasks` - recent task records
