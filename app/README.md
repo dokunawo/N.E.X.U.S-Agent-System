@@ -9,7 +9,7 @@ This v0 gives you the core shape of the system:
 - N.E.X.U.S orchestrator
 - Specialized mock agents
 - Mock app analytics
-- SQLite memory log
+- SQLite task, agent, log, memory, approval, and source schema
 - Optional OpenAI-powered narrative when `OPENAI_API_KEY` is set
 
 The app runs without an API key. It uses deterministic mock data until you connect real services.
@@ -52,6 +52,20 @@ Open:
 http://127.0.0.1:8000
 ```
 
+From the project root, you can also use the N.E.X.U.S launcher:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Start-NEXUS.ps1
+```
+
+To start it in the background:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Start-NEXUS.ps1 -Background
+```
+
+The background launcher writes the server PID and logs into the `data` folder.
+
 If you are using the bundled Codex Python runtime on this machine, the executable is:
 
 ```powershell
@@ -75,7 +89,13 @@ Without `OPENAI_API_KEY`, the app keeps working in mock mode.
 - `GET /api/health` - service status
 - `GET /api/dashboard` - initial analytics and memory snapshot
 - `POST /api/run` - run the orchestrator for a goal
+- `GET /api/schema` - current operating schema values
+- `GET /api/agents` - official agent roster
+- `GET /api/tasks` - recent task records
+- `GET /api/logs` - recent agent activity logs
 - `GET /api/memory` - recent memory log
+- `GET /api/memory/entries` - structured memory entries
+- `GET /api/approvals` - pending approval requests
 - `DELETE /api/memory` - clear memory log
 
 ## Example Goal
@@ -86,10 +106,10 @@ How is my app doing today, and what should we do next?
 
 ## Next Build Steps
 
-1. Replace mock analytics with real data integrations.
-2. Add account/project connectors.
-3. Add WebSocket streaming for live agent status.
-4. Add OpenAI-powered summaries and planning.
-5. Add speech-to-text and text-to-speech.
-6. Add wake phrases: "Nexus, come online", "Nexus, status", "Nexus, lock in", and "Nexus, stand by".
-7. Deploy the orchestrator in the cloud while keeping local execution sandboxed.
+1. Add dashboard views for tasks, approvals, and memory entries.
+2. Add approval actions so Daniel can approve or reject pending requests.
+3. Connect Calendar in read-only mode first.
+4. Connect Gmail in read-only mode after Calendar works.
+5. Add WebSocket streaming for live agent status.
+6. Add OpenAI-powered planning on top of the stored task and memory history.
+7. Add speech-to-text, text-to-speech, and wake phrases after the data loop is reliable.

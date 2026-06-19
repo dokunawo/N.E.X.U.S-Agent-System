@@ -59,6 +59,7 @@ def dashboard() -> dict:
     return {
         "analytics": snapshot,
         "memory": memory.recent_runs(limit=8),
+        "operating": memory.operating_snapshot(limit=8),
         "mode": orchestrator.mode,
     }
 
@@ -73,7 +74,37 @@ def get_memory() -> dict:
     return {"runs": memory.recent_runs(limit=25)}
 
 
+@app.get("/api/schema")
+def get_schema() -> dict:
+    return memory.schema_overview()
+
+
+@app.get("/api/agents")
+def get_agents() -> dict:
+    return {"agents": memory.list_agents()}
+
+
+@app.get("/api/tasks")
+def get_tasks() -> dict:
+    return {"tasks": memory.recent_tasks(limit=25)}
+
+
+@app.get("/api/logs")
+def get_logs() -> dict:
+    return {"logs": memory.recent_logs(limit=50)}
+
+
+@app.get("/api/memory/entries")
+def get_memory_entries() -> dict:
+    return {"memory_entries": memory.recent_memory_entries(limit=25)}
+
+
+@app.get("/api/approvals")
+def get_approvals() -> dict:
+    return {"approvals": memory.pending_approvals(limit=25)}
+
+
 @app.delete("/api/memory")
 def clear_memory() -> dict:
     memory.clear()
-    return {"ok": True, "runs": []}
+    return {"ok": True, "runs": [], "operating": memory.operating_snapshot(limit=8)}

@@ -110,14 +110,35 @@ class Orchestrator:
 
     def handle_goal(self, goal: str) -> dict:
         snapshot = self.analytics.get_snapshot()
+        risk = self._assess_risk(goal)
 
         events = [agent.run(snapshot).as_dict() for agent in self.agents]
         strategy_event, suggestions = self.strategy.run(snapshot)
         events.append(strategy_event.as_dict())
 
+        approval = None
+        task_status = "completed"
+        if risk["requires_approval"]:
+            approval = self._build_approval_request(goal, risk)
+            task_status = "waiting_for_approval"
+            events.append(
+                AgentEvent(
+                    "Sentinel",
+                    "approval_required",
+                    f"Approval required before N.E.X.U.S takes this {risk['level']} risk action.",
+                ).as_dict()
+            )
+            suggestions.insert(0, "Review the pending approval before any sensitive action is taken.")
+
         summary = self.openai.create_executive_summary(goal, snapshot, events)
         if not summary:
             summary = self._mock_summary(goal, snapshot)
+
+        if approval:
+            summary = (
+                f"{summary} Sentinel marked the requested action as {risk['level']} risk, so N.E.X.U.S "
+                "logged an approval request and will wait for Daniel before taking action."
+            )
 
         payload = {
             "goal": goal,
@@ -125,11 +146,22 @@ class Orchestrator:
             "analytics": snapshot,
             "events": events,
             "suggestions": suggestions,
+            "risk": risk,
             "mode": self.mode,
         }
-        saved = self.memory.save_run(goal=goal, summary=summary, payload=payload)
+        saved = self.memory.save_run(
+            goal=goal,
+            summary=summary,
+            payload=payload,
+            events=events,
+            suggestions=suggestions,
+            risk_level=risk["level"],
+            task_status=task_status,
+            approval=approval,
+        )
         payload["memory_entry"] = saved
         payload["recent_memory"] = self.memory.recent_runs(limit=8)
+        payload["operating"] = self.memory.operating_snapshot(limit=8)
         return payload
 
     def _mock_summary(self, goal: str, snapshot: dict) -> str:
@@ -142,3 +174,90 @@ class Orchestrator:
             f"{metrics['Error events']['value']} error events today. N.E.X.U.S would fix that before pushing a bigger "
             "growth campaign."
         )
+
+    def _assess_risk(self, goal: str) -> dict:
+        text = goal.lower()
+        risk_rules = [
+            (
+                "critical",
+                [
+                    "delete files",
+                    "delete file",
+                    "erase",
+                    "wipe",
+                    "drop table",
+                    "reset database",
+                    "api key",
+                    "password",
+                    "secret key",
+                ],
+            ),
+            (
+                "high",
+                [
+                    "send email",
+                    "send message",
+                    "contact ",
+                    "spend",
+                    "buy ",
+                    "purchase",
+                    "bank account",
+                    "financial account",
+                    "connect gmail",
+                    "connect calendar",
+                    "connect account",
+                    "connect tasks",
+                    "share private",
+                    "expose private",
+                    "post publicly",
+                ],
+            ),
+            (
+                "medium",
+                [
+                    "gmail",
+                    "calendar",
+                    "personal data",
+                    "private information",
+                    "oauth",
+                    "external account",
+                ],
+            ),
+        ]
+
+        for level, keywords in risk_rules:
+            matches = [keyword.strip() for keyword in keywords if keyword in text]
+            if matches:
+                return {
+                    "level": level,
+                    "requires_approval": True,
+                    "matched_rules": matches,
+                    "reason": self._risk_reason(level),
+                }
+
+        return {
+            "level": "low",
+            "requires_approval": False,
+            "matched_rules": [],
+            "reason": "No sensitive action boundary was detected.",
+        }
+
+    def _build_approval_request(self, goal: str, risk: dict) -> dict:
+        approval_type = "written_confirmation" if risk["level"] in {"high", "critical"} else "one_click_confirmation"
+        return {
+            "requested_by_agent_id": "sentinel",
+            "title": f"Approval needed: {risk['level']} risk action",
+            "requested_action": goal,
+            "reason": risk["reason"],
+            "risk_level": risk["level"],
+            "approval_type": approval_type,
+            "payload": {"matched_rules": risk["matched_rules"]},
+        }
+
+    def _risk_reason(self, level: str) -> str:
+        reasons = {
+            "critical": "The request may delete data, expose secrets, or change something difficult to reverse.",
+            "high": "The request may contact people, spend money, connect an account, or expose private information.",
+            "medium": "The request touches personal context or an external account and should be approved first.",
+        }
+        return reasons[level]
