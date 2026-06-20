@@ -46,12 +46,12 @@ MEMORY_KINDS = [
 
 AGENT_ROSTER = [
     {
-        "id": "nexus",
+        "id": "rambo",
         "name": "R.A.M.B.O.",
         "role": "Overall operator",
-        "purpose": "Coordinate the Brain network and combine final advice for Daniel.",
+        "purpose": "Coordinate the Brain network and combine final advice for Sir.",
         "access_scope": "Can route work, summarize results, and request support from specialized Brains.",
-        "risk_boundary": "Must ask Sentinel and Daniel before sensitive or difficult-to-reverse actions.",
+        "risk_boundary": "Must ask Sentinel and Sir before sensitive or difficult-to-reverse actions.",
         "default_status": "online",
     },
     {
@@ -68,7 +68,7 @@ AGENT_ROSTER = [
         "name": "Engineer",
         "role": "Coding and technical build work",
         "purpose": "Write, edit, debug, and verify project code.",
-        "access_scope": "Can modify project files when Daniel asks for implementation.",
+        "access_scope": "Can modify project files when Sir asks for implementation.",
         "risk_boundary": "Must ask before deleting files or making broad system-wide changes.",
         "default_status": "standby",
     },
@@ -96,7 +96,7 @@ AGENT_ROSTER = [
         "role": "Safety and system protection",
         "purpose": "Guard privacy, permissions, sensitive actions, and risk.",
         "access_scope": "Can review any proposed action for risk.",
-        "risk_boundary": "Cannot approve actions for Daniel; it can only request approval.",
+        "risk_boundary": "Cannot approve actions for Sir; it can only request approval.",
         "default_status": "ready",
     },
     {
@@ -104,7 +104,7 @@ AGENT_ROSTER = [
         "name": "Steward",
         "role": "Financial tracking and resource guidance",
         "purpose": "Track budgets, spending patterns, savings, investments, and practical financial signals.",
-        "access_scope": "Can organize financial records Daniel enters or explicitly connects.",
+        "access_scope": "Can organize financial records Sir enters or explicitly connects.",
         "risk_boundary": "Must not move money, trade investments, connect financial accounts, or provide professional financial advice without clear approval boundaries.",
         "default_status": "ready",
     },
@@ -153,7 +153,7 @@ DATA_SOURCES = [
         "kind": "local_input",
         "status": "active",
         "privacy_level": "private",
-        "detail": "Typed goals and dashboard actions Daniel enters directly.",
+        "detail": "Typed goals and dashboard actions Sir enters directly.",
     },
     {
         "id": "mock_analytics",
@@ -209,7 +209,7 @@ DATA_SOURCES = [
         "kind": "local_input",
         "status": "active",
         "privacy_level": "sensitive",
-        "detail": "Local budget, expense, savings, and investment entries Daniel types into R.A.M.B.O.",
+        "detail": "Local budget, expense, savings, and investment entries Sir types into R.A.M.B.O.",
     },
     {
         "id": "market_context",
@@ -229,7 +229,7 @@ LEARNING_SOURCES = [
         "status": "active",
         "privacy_level": "private",
         "consent_required": False,
-        "detail": "Learns from goals Daniel types directly into R.A.M.B.O.",
+        "detail": "Learns from goals Sir types directly into R.A.M.B.O.",
     },
     {
         "id": "approval_history",
@@ -238,7 +238,7 @@ LEARNING_SOURCES = [
         "status": "active",
         "privacy_level": "private",
         "consent_required": False,
-        "detail": "Learns from Daniel's approve and reject decisions.",
+        "detail": "Learns from Sir's approve and reject decisions.",
     },
     {
         "id": "connected_plugins",
@@ -276,8 +276,8 @@ def utc_now() -> str:
 
 def agent_id_from_name(name: str) -> str:
     normalized = name.lower().replace(".", "").replace(" ", "_")
-    if normalized == "nexus":
-        return "nexus"
+    if normalized == "rambo":
+        return "rambo"
 
     for agent in AGENT_ROSTER:
         if agent["name"].lower() == name.lower():

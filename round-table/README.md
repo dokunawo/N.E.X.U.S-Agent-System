@@ -10,7 +10,7 @@ default: "Frontend: simple browser dashboard first."
 round-table/
   index.html              R.A.M.B.O. home — landscape council dashboard
   round-table.html        Council hub — radial Round Table + 3D core
-  agents/<id>.html         11 pages: nexus, architect, engineer, seeker,
+  agents/<id>.html         11 pages: rambo, architect, engineer, seeker,
                             analyst, sentinel, steward, link, keeper, echo, pilot
   system/approvals.html    Sentinel's cross-agent approval queue
   system/learning.html     R.A.M.B.O.'s own learning log

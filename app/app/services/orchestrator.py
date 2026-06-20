@@ -148,7 +148,7 @@ class Orchestrator:
         if approval:
             summary = (
                 f"{summary} Sentinel marked the requested action as {risk['level']} risk, so R.A.M.B.O. "
-                "logged an approval request and will wait for Daniel before taking action."
+                "logged an approval request and will wait for Sir before taking action."
             )
 
         payload = {

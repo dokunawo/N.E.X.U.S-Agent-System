@@ -116,7 +116,7 @@ How is my app doing today, and what should we do next?
 ## Next Build Steps
 
 1. Add dashboard views for tasks, approvals, and memory entries.
-2. Add approval actions so Daniel can approve or reject pending requests.
+2. Add approval actions so Sir can approve or reject pending requests.
 3. Connect Calendar in read-only mode first.
 4. Connect Gmail in read-only mode after Calendar works.
 5. Add WebSocket streaming for live agent status.

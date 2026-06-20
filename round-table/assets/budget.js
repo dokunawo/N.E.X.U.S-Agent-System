@@ -14,7 +14,7 @@
   const pct = (n) => (n * 100).toFixed(1) + '%';
   const uid = () => Math.random().toString(36).slice(2, 9);
 
-  // ---- Default categories, matched 1:1 to Daniel's existing
+  // ---- Default categories, matched 1:1 to Sir's existing
   // "2026 Annual Personal Financial Planner" Google Sheet ----
   const EXPENSE_CATEGORIES = [
     'Asset', 'Auto Fees', 'Auto Insurance', 'Auto Lien', 'Auto Repairs & Maintenance',

@@ -11,7 +11,7 @@ $python = Join-Path $projectRoot ".venv\Scripts\python.exe"
 $launcher = Join-Path $projectRoot "scripts\start_rambo_background.py"
 
 if (-not (Test-Path $python)) {
-    throw "Python was not found at $python. Create the virtual environment before starting R.A.M.B.O.."
+    throw "Python was not found at $python. Create the virtual environment before starting R.A.M.B.O."
 }
 
 function Get-RamboPort {

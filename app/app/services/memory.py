@@ -25,7 +25,7 @@ class MemoryStore:
     """SQLite-backed operating backbone for R.A.M.B.O."""
 
     def __init__(self) -> None:
-        db_path = os.getenv("APP_MEMORY_DB", "nexus_memory.sqlite3")
+        db_path = os.getenv("APP_MEMORY_DB", "rambo_memory.sqlite3")
         self.path = Path(db_path)
         self._init_db()
 
@@ -75,7 +75,7 @@ class MemoryStore:
                     status TEXT NOT NULL,
                     priority TEXT NOT NULL DEFAULT 'normal',
                     risk_level TEXT NOT NULL DEFAULT 'low',
-                    owner_agent_id TEXT NOT NULL DEFAULT 'nexus',
+                    owner_agent_id TEXT NOT NULL DEFAULT 'rambo',
                     source TEXT NOT NULL DEFAULT 'dashboard',
                     summary TEXT,
                     payload TEXT NOT NULL DEFAULT '{}',
@@ -109,7 +109,7 @@ class MemoryStore:
                     title TEXT NOT NULL,
                     content TEXT NOT NULL,
                     importance INTEGER NOT NULL DEFAULT 1,
-                    source TEXT NOT NULL DEFAULT 'nexus',
+                    source TEXT NOT NULL DEFAULT 'rambo',
                     tags TEXT NOT NULL DEFAULT '[]',
                     payload TEXT NOT NULL DEFAULT '{}',
                     FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE SET NULL
@@ -439,7 +439,7 @@ class MemoryStore:
                     task_status,
                     "normal",
                     self._known_risk_level(risk_level),
-                    "nexus",
+                    "rambo",
                     "dashboard",
                     summary,
                     self._to_json({"suggestions": suggestions}),
@@ -480,7 +480,7 @@ class MemoryStore:
                     title,
                     summary,
                     2 if risk_level in {"medium", "high", "critical"} else 1,
-                    "nexus",
+                    "rambo",
                     self._to_json(["run", risk_level]),
                     self._to_json({"goal": goal, "suggestions": suggestions}),
                 ),
@@ -768,7 +768,7 @@ class MemoryStore:
                 detail = self._approval_detail(connection, approval_id)
                 return dict(detail) if detail else None
 
-            note = decision_note.strip() or f"Daniel {decision} this request."
+            note = decision_note.strip() or f"Sir {decision} this request."
             connection.execute(
                 """
                 UPDATE approval_requests
@@ -797,7 +797,7 @@ class MemoryStore:
                     resolved_at,
                     "sentinel",
                     log_status,
-                    f"Daniel {decision} approval request {approval_id}.",
+                    f"Sir {decision} approval request {approval_id}.",
                     approval["risk_level"],
                     self._to_json({"approval_id": approval_id, "decision": decision, "note": note}),
                 ),
@@ -882,29 +882,29 @@ class MemoryStore:
         candidates = [
             (
                 "financial_growth",
-                "Daniel wants stronger financial awareness",
-                "Daniel is asking about budgeting, spending, savings, investments, or financial guidance.",
+                "Sir wants stronger financial awareness",
+                "Sir is asking about budgeting, spending, savings, investments, or financial guidance.",
                 ["budget", "spending", "savings", "investment", "investments", "finance", "financial", "expenses"],
                 0.72,
             ),
             (
                 "business_building",
-                "Daniel is building business and operating systems",
-                "Daniel often frames requests around business, systems, strategy, and durable execution.",
+                "Sir is building business and operating systems",
+                "Sir often frames requests around business, systems, strategy, and durable execution.",
                 ["business", "company", "startup", "revenue", "customer", "market", "strategy"],
                 0.68,
             ),
             (
                 "self_improvement",
-                "Daniel values self-improvement and personal operating structure",
-                "Daniel is asking R.A.M.B.O. to learn preferences, improve routines, and understand him over time.",
+                "Sir values self-improvement and personal operating structure",
+                "Sir is asking R.A.M.B.O. to learn preferences, improve routines, and understand him over time.",
                 ["learn me", "learning me", "self", "habit", "routine", "person", "over time", "improve"],
                 0.7,
             ),
             (
                 "technical_builder",
-                "Daniel is hands-on with technical build work",
-                "Daniel asks for implementation, dashboards, agents, schemas, and local development workflows.",
+                "Sir is hands-on with technical build work",
+                "Sir asks for implementation, dashboards, agents, schemas, and local development workflows.",
                 ["implement", "build", "dashboard", "agent", "schema", "github", "code"],
                 0.66,
             ),
@@ -1104,8 +1104,8 @@ class MemoryStore:
 
         self.upsert_learning_insight(
             category="financial_tracking",
-            title="Steward planner is being used as Daniel's manual budget workspace",
-            detail="Daniel is entering budget planner data directly into R.A.M.B.O., stored locally in SQLite.",
+            title="Steward planner is being used as Sir's manual budget workspace",
+            detail="Sir is entering budget planner data directly into R.A.M.B.O., stored locally in SQLite.",
             confidence=0.82,
             source_id="local_goals",
             evidence=[{"saved_at": now, "sections": sorted(state.keys())}],
@@ -1164,8 +1164,8 @@ class MemoryStore:
 
         self.upsert_learning_insight(
             category="financial_tracking",
-            title="Daniel is tracking expenses with Steward",
-            detail="Daniel is starting to use R.A.M.B.O. for expense awareness and budgeting.",
+            title="Sir is tracking expenses with Steward",
+            detail="Sir is starting to use R.A.M.B.O. for expense awareness and budgeting.",
             confidence=0.78,
             source_id="local_goals",
             evidence=[{"category": category, "amount": amount, "description": description}],

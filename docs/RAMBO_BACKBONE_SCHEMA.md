@@ -125,7 +125,7 @@ This keeps learning curious but controlled.
 
 ### learning_insights
 
-The current things R.A.M.B.O. believes it is learning about Daniel.
+The current things R.A.M.B.O. believes it is learning about Sir.
 
 Each insight has:
 
@@ -205,7 +205,7 @@ When `POST /api/run` receives a goal:
 4. Agent log rows are created.
 5. A memory entry is saved.
 6. If risk is medium or higher, Sentinel creates a pending approval request.
-7. Daniel can approve or reject the approval request from the dashboard.
+7. Sir can approve or reject the approval request from the dashboard.
 
 No external account is connected yet.
 

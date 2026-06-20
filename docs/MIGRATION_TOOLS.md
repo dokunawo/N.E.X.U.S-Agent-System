@@ -60,7 +60,7 @@ This file is the handoff bundle for continuing R.A.M.B.O. from another AI or ses
 - Steward has a manual-entry budget planner and a downloadable copy.
 - The home page now uses a single large globe section first, with Council data below it.
 - The home page includes a direct `View Brain Roster` button instead of duplicating the roster there.
-- The home page now includes a `R.A.M.B.O. COMMAND SEAT` section below Brain Data, carrying the old Overseer role, critical tier, task stats, core directives, and mission journal from the shared internal `nexus` record.
+- The home page now includes a `R.A.M.B.O. COMMAND SEAT` section below Brain Data, carrying the old Overseer role, critical tier, task stats, core directives, and mission journal from the shared internal `rambo` record.
 - Globe nodes now open hover/click bubbles that show the Brain's current work.
 - Round Table Brains now orbit the globe instead of stacking into the center.
 - Each Brain page now has one centered avatar scene with orbiting task stats.
@@ -74,6 +74,9 @@ This file is the handoff bundle for continuing R.A.M.B.O. from another AI or ses
 - Visible branding is now R.A.M.B.O. — Responsive Autonomous Multi-Brain Operator.
 - The tactical UI palette now uses Midnight Black, Tactical Red, Steel Gray, Signal White, and Pulse Orange.
 - The daily briefing uses the boot phrase: `R.A.M.B.O. online. Systems synchronized. Standing by for your command.`
+- The daily briefing greets the owner as `Sir`.
+- The internal operator key and generated operator page now use `rambo`.
+- Local SQLite memory now defaults to `rambo_memory.sqlite3`.
 
 ## Brain Roster
 
@@ -124,7 +127,7 @@ This file is the handoff bundle for continuing R.A.M.B.O. from another AI or ses
 - Steward's in-dashboard planner saves manual entries to local SQLite.
 - Daily briefing now reports greeting, Detroit time/day/date, weather fallback/live weather, Calendar connection status, Brain briefings, today's task focus, and operating loop guardrails.
 - `docs/RAMBO_BRAIN_PROMPTS.md` defines the scalable R.A.M.B.O. Brain identity, routing prompts, master persona, mission statement, branding kit, and loop guardrails.
-- The latest handoff note is `docs/ROADMAP_16_2026-06-20_06-05-41.md`.
+- The latest handoff note is `docs/ROADMAP_17_2026-06-20_06-19-25.md`.
 
 ## Recommended Next Steps
 

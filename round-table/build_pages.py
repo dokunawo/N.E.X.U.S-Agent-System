@@ -140,11 +140,11 @@ def render_system_scene(page):
 
 def render_sidebar(data, active_id, base):
     agents = sorted(data["agents"], key=lambda a: a["order"])
-    specialists = [a for a in agents if a["id"] != "nexus"]
+    specialists = [a for a in agents if a["id"] != "rambo"]
     sys_pages = data["systemPages"]
 
     items = []
-    items.append(nav_link(f"{base}index.html", "R.A.M.B.O.", "#FF2E2E", active_id in ("home", "nexus"), dot=False, icon_text="RB"))
+    items.append(nav_link(f"{base}index.html", "R.A.M.B.O.", "#FF2E2E", active_id in ("home", "rambo"), dot=False, icon_text="RB"))
     items.append('<div class="nav-group-label">COUNCIL</div>')
     items.append(nav_link(f"{base}round-table.html", "Round Table", "#FF7A00", active_id == "round-table", dot=False, icon_text="RT"))
     items.append('<div class="nav-group-label">BRAINS</div>')
@@ -526,8 +526,8 @@ def render_agent_card(agent):
 
 def render_home_page(data, out_path):
     agents = sorted(data["agents"], key=lambda a: a["order"])
-    center_agent = next(a for a in agents if a["id"] == "nexus")
-    specialist_agents = [a for a in agents if a["id"] != "nexus"]
+    center_agent = next(a for a in agents if a["id"] == "rambo")
+    specialist_agents = [a for a in agents if a["id"] != "rambo"]
     center_stats = center_agent["stats"]
     center_journal = center_agent["journal"]
     center_directives = "".join(f"<li>{esc(d)}</li>" for d in center_agent["directives"])
@@ -582,7 +582,7 @@ def render_home_page(data, out_path):
     node_lines.append('<circle cx="50" cy="50" r="3.5" class="home-core-point"></circle>')
 
     body = f"""{render_sidebar(data, "home", "")}
-  <main class="main nexus-home">
+  <main class="main rambo-home">
     {render_topbar("", "R.A.M.B.O.")}
 
     <section class="daily-briefing-panel fade-in" data-daily-briefing>
@@ -615,7 +615,7 @@ def render_home_page(data, out_path):
       <div class="home-title">
         <h1><b>R.A.M.B.O.</b></h1>
       </div>
-      <p>Responsive Autonomous Multi-Brain Operator. A tactical command surface that routes Daniel's intent through specialized Brains, then synthesizes one clear answer.</p>
+      <p>Responsive Autonomous Multi-Brain Operator. A tactical command surface that routes Sir's intent through specialized Brains, then synthesizes one clear answer.</p>
     </div>
 
     <div class="home-layout landscape">
@@ -671,10 +671,10 @@ def render_home_page(data, out_path):
         </div>
       </section>
 
-      <section class="nexus-overseer-panel fade-in" style="--node-color:{center_agent["color"]};--accent:{center_agent["color"]}">
+      <section class="rambo-overseer-panel fade-in" style="--node-color:{center_agent["color"]};--accent:{center_agent["color"]}">
         <div class="section-title">R.A.M.B.O. COMMAND SEAT</div>
-        <div class="nexus-overseer-grid">
-          <div class="nexus-overseer-identity">
+        <div class="rambo-overseer-grid">
+          <div class="rambo-overseer-identity">
             {render_avatar(center_agent, "lg")}
             <div>
               <h2>{esc(center_agent["name"])}</h2>
@@ -682,14 +682,14 @@ def render_home_page(data, out_path):
               <p>{esc(center_agent["description"])}</p>
             </div>
           </div>
-          <div class="nexus-overseer-stats">
-            <div class="nexus-stat"><span>Tasks completed</span><strong>{center_stats["tasksCompleted"]}</strong></div>
-            <div class="nexus-stat"><span>Tasks queued</span><strong>{center_stats["tasksQueued"]}</strong></div>
-            <div class="nexus-stat"><span>Success rate</span><strong>{center_stats["successRate"]}%</strong></div>
-            <div class="nexus-stat tier"><span>Permission tier</span><strong>Critical</strong></div>
+          <div class="rambo-overseer-stats">
+            <div class="rambo-stat"><span>Tasks completed</span><strong>{center_stats["tasksCompleted"]}</strong></div>
+            <div class="rambo-stat"><span>Tasks queued</span><strong>{center_stats["tasksQueued"]}</strong></div>
+            <div class="rambo-stat"><span>Success rate</span><strong>{center_stats["successRate"]}%</strong></div>
+            <div class="rambo-stat tier"><span>Permission tier</span><strong>Critical</strong></div>
           </div>
         </div>
-        <div class="nexus-overseer-body">
+        <div class="rambo-overseer-body">
           <div class="directive-block">
             <div class="section-title small">CORE DIRECTIVES</div>
             <ul class="directives">{center_directives}</ul>
@@ -713,7 +713,7 @@ def render_home_page(data, out_path):
 def render_round_table_page(data, out_path):
     base = ""
     agents = sorted(data["agents"], key=lambda a: a["order"])
-    specialists = [a for a in agents if a["id"] != "nexus"]
+    specialists = [a for a in agents if a["id"] != "rambo"]
     n = len(specialists)
     nodes_html = []
     radius = 42
@@ -743,7 +743,7 @@ def render_round_table_page(data, out_path):
         <canvas id="core-canvas" class="core-canvas"></canvas>
         <div class="ring-static"></div>
         <div class="ring-static r2"></div>
-        <div class="table-center">{render_avatar(next(a for a in agents if a["id"] == "nexus"), "lg")}<div class="label mono">R.A.M.B.O.</div></div>
+        <div class="table-center">{render_avatar(next(a for a in agents if a["id"] == "rambo"), "lg")}<div class="label mono">R.A.M.B.O.</div></div>
         <div class="node-wrap">{''.join(nodes_html)}</div>
       </div>
     </div>

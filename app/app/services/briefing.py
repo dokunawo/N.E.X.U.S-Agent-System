@@ -123,10 +123,10 @@ class BriefingService:
         hour = now.hour
         boot = "R.A.M.B.O. online. Systems synchronized. Standing by for your command."
         if hour < 12:
-            return f"Good morning, Daniel. {boot}"
+            return f"Good morning, Sir. {boot}"
         if hour < 18:
-            return f"Good afternoon, Daniel. {boot}"
-        return f"Good evening, Daniel. {boot}"
+            return f"Good afternoon, Sir. {boot}"
+        return f"Good evening, Sir. {boot}"
 
     def _detroit_weather(self) -> dict[str, Any]:
         params = urlencode(

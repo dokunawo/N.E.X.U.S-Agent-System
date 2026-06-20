@@ -8,17 +8,17 @@
              },
     "agents":  [
                    {
-                       "id":  "nexus",
+                       "id":  "rambo",
                        "order":  0,
                        "name":  "R.A.M.B.O.",
                        "title":  "Responsive Autonomous Multi-Brain Operator",
                        "color":  "#FF2E2E",
                        "glyph":  "R",
                        "permissionTier":  "Critical",
-                       "summary":  "The operator behind everything. Routes Daniel\u0027s intent through specialized Brains and gives one final answer.",
-                       "description":  "R.A.M.B.O. is the Responsive Autonomous Multi-Brain Operator. It understands Daniel\u0027s intent, breaks it into actionable tasks, routes each task to the correct Brain, checks Sentinel boundaries, and synthesizes the outputs into a clear final answer.",
+                       "summary":  "The operator behind everything. Routes Sir\u0027s intent through specialized Brains and gives one final answer.",
+                       "description":  "R.A.M.B.O. is the Responsive Autonomous Multi-Brain Operator. It understands Sir\u0027s intent, breaks it into actionable tasks, routes each task to the correct Brain, checks Sentinel boundaries, and synthesizes the outputs into a clear final answer.",
                        "directives":  [
-                                          "Understand Daniel\u0027s intent and define the real success condition",
+                                          "Understand Sir\u0027s intent and define the real success condition",
                                           "Route every task to the correct specialized Brain",
                                           "Synthesize Brain outputs into one clear final answer",
                                           "Escalate to Sentinel before money, messages, deletion, private data exposure, or account connections"
@@ -77,7 +77,7 @@
                        "directives":  [
                                           "Break large goals into ordered, testable phases",
                                           "Flag dependencies between Brains before work starts",
-                                          "Keep plans in plain English — Daniel is not a developer",
+                                          "Keep plans in plain English — Sir is not a developer",
                                           "Defer to R.A.M.B.O. on priority calls between competing plans"
                                       ],
                        "stats":  {
@@ -225,7 +225,7 @@
                        "color":  "#38BDF8",
                        "glyph":  "An",
                        "permissionTier":  "Low",
-                       "summary":  "Turns raw numbers into a read Daniel can act on.",
+                       "summary":  "Turns raw numbers into a read Sir can act on.",
                        "description":  "Analyst takes whatever data exists — mock or real — and finds the pattern worth surfacing. Spending trends, task velocity, Brain success rates. It does not own any data source; it just reads and reports.",
                        "directives":  [
                                           "Surface the one number that matters, not all of them",
@@ -278,7 +278,7 @@
                                           "Require approval before: deleting files, spending money, contacting people, sending messages, exposing private data, connecting financial accounts",
                                           "Log every approval decision with a timestamp and reason",
                                           "Default to asking when risk level is ambiguous",
-                                          "Never approve its own escalations — approval comes from Daniel"
+                                          "Never approve its own escalations — approval comes from Sir"
                                       ],
                        "stats":  {
                                      "tasksCompleted":  8,
@@ -330,7 +330,7 @@
                                           "Track only what\u0027s entered manually until financial-account integration is approved",
                                           "Never move money or initiate a transaction — Steward reports, it doesn\u0027t act",
                                           "Route any account-connection request through Sentinel first",
-                                          "Keep category structure consistent with Daniel\u0027s existing personal budget format"
+                                          "Keep category structure consistent with Sir\u0027s existing personal budget format"
                                       ],
                        "stats":  {
                                      "tasksCompleted":  6,
@@ -342,7 +342,7 @@
                                                          {
                                                              "date":  "2026-06-19",
                                                              "title":  "Budget planner UI shipped",
-                                                             "note":  "Income, expense (30 categories matched to Daniel\u0027s existing planner), savings goals, investments, and debt payoff calculators, all manual-entry."
+                                                             "note":  "Income, expense (30 categories matched to Sir\u0027s existing planner), savings goals, investments, and debt payoff calculators, all manual-entry."
                                                          },
                                                          {
                                                              "date":  "2026-06-19",
@@ -353,7 +353,7 @@
                                        "inProgress":  [
                                                           {
                                                               "title":  "Category reconciliation",
-                                                              "note":  "Matching category list 1:1 against Daniel\u0027s \u00272026 Annual Personal Financial Planner\u0027 sheet."
+                                                              "note":  "Matching category list 1:1 against Sir\u0027s \u00272026 Annual Personal Financial Planner\u0027 sheet."
                                                           }
                                                       ],
                                        "queued":  [
@@ -482,10 +482,10 @@
                        "color":  "#7DE8FF",
                        "glyph":  "Ec",
                        "permissionTier":  "Low",
-                       "summary":  "The voice Daniel actually hears.",
+                       "summary":  "The voice Sir actually hears.",
                        "description":  "Echo owns tone and phrasing for anything user-facing — dashboard copy, summaries, future voice responses. Calm command center, sharp operator, plain-spoken. No jargon unless asked for.",
                        "directives":  [
-                                          "Keep language plain — explain like Daniel is smart but not a developer",
+                                          "Keep language plain — explain like Sir is smart but not a developer",
                                           "Match the R.A.M.B.O. personality: calm, confidence-building, not theatrical",
                                           "Never soften a Sentinel warning to sound friendlier",
                                           "Hold wake-phrase and voice-response design until Phase 7"
@@ -568,7 +568,7 @@
                             "title":  "Sentinel Approval Queue",
                             "color":  "#FF4D6A",
                             "glyph":  "AP",
-                            "description":  "A cross-Brain view of everything waiting on Daniel\u0027s sign-off. Anything that spends money, sends a message, deletes a file, or touches a new account lands here before it happens — owned by Sentinel, visible to every Brain.",
+                            "description":  "A cross-Brain view of everything waiting on Sir\u0027s sign-off. Anything that spends money, sends a message, deletes a file, or touches a new account lands here before it happens — owned by Sentinel, visible to every Brain.",
                             "queue":  [
                                           {
                                               "status":  "pending",

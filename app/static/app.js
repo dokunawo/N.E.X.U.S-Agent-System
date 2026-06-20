@@ -315,7 +315,7 @@ async function decideApproval(approvalId, action) {
   const result = await api(`/api/approvals/${approvalId}/${action}`, {
     method: "POST",
     body: JSON.stringify({
-      decision_note: `Daniel ${decision} this request from the dashboard.`,
+      decision_note: `Sir ${decision} this request from the dashboard.`,
     }),
   });
 
