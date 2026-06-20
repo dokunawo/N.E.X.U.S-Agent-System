@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
 
-$nexusScript = Join-Path $PSScriptRoot "Start-NEXUS.ps1"
-& $nexusScript @args
+$ramboScript = Join-Path $PSScriptRoot "Start-RAMBO.ps1"
+& $ramboScript @args
 exit $LASTEXITCODE

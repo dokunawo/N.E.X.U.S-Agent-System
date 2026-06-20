@@ -45,7 +45,7 @@ class OpenAIBridge:
                     {
                         "role": "system",
                         "content": (
-                            "You are the concise voice of N.E.X.U.S, a calm personal operating system. "
+                            "You are the concise voice of R.A.M.B.O., a calm personal operating system. "
                             "Summarize product health, risks, and next actions in 4 sentences or fewer."
                         ),
                     },

@@ -22,7 +22,7 @@ from app.services.operating_schema import (
 
 
 class MemoryStore:
-    """SQLite-backed operating backbone for N.E.X.U.S."""
+    """SQLite-backed operating backbone for R.A.M.B.O."""
 
     def __init__(self) -> None:
         db_path = os.getenv("APP_MEMORY_DB", "nexus_memory.sqlite3")
@@ -245,6 +245,16 @@ class MemoryStore:
                 )
                 """
             )
+            connection.execute(
+                """
+                CREATE TABLE IF NOT EXISTS steward_budget_state (
+                    id TEXT PRIMARY KEY,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL,
+                    payload TEXT NOT NULL
+                )
+                """
+            )
             self._seed_agents(connection)
             self._seed_data_sources(connection)
             self._seed_learning_sources(connection)
@@ -385,8 +395,9 @@ class MemoryStore:
                 "budget_categories",
                 "expenses",
                 "savings_goals",
-                "investment_positions",
-                "runs",
+            "investment_positions",
+            "steward_budget_state",
+            "runs",
             ],
             "task_statuses": TASK_STATUSES,
             "agent_log_statuses": AGENT_LOG_STATUSES,
@@ -447,7 +458,7 @@ class MemoryStore:
                     (
                         task_id,
                         created_at,
-                        agent_id_from_name(str(event.get("agent", "N.E.X.U.S"))),
+                        agent_id_from_name(str(event.get("agent", "R.A.M.B.O."))),
                         self._known_log_status(str(event.get("status", "complete"))),
                         str(event.get("message", "")),
                         self._known_risk_level(risk_level),
@@ -611,6 +622,72 @@ class MemoryStore:
             ).fetchall()
 
         return [dict(row) for row in rows]
+
+    def council_journals(self, limit_per_section: int = 6) -> dict:
+        journals: dict[str, dict[str, list[dict]]] = {}
+        with self._connect() as connection:
+            agents = connection.execute(
+                """
+                SELECT id, name
+                FROM agents
+                ORDER BY sort_order
+                """
+            ).fetchall()
+            for agent in agents:
+                agent_id = agent["id"]
+                completed_rows = connection.execute(
+                    """
+                    SELECT
+                        agent_logs.created_at AS date,
+                        tasks.title AS title,
+                        agent_logs.message AS note,
+                        agent_logs.status AS status
+                    FROM agent_logs
+                    JOIN tasks ON tasks.id = agent_logs.task_id
+                    WHERE agent_logs.agent_id = ?
+                        AND agent_logs.status IN ('complete', 'online', 'learning', 'ready')
+                    ORDER BY agent_logs.id DESC
+                    LIMIT ?
+                    """,
+                    (agent_id, limit_per_section),
+                ).fetchall()
+                in_progress_rows = connection.execute(
+                    """
+                    SELECT
+                        updated_at AS date,
+                        title,
+                        COALESCE(summary, goal) AS note,
+                        status
+                    FROM tasks
+                    WHERE owner_agent_id = ?
+                        AND status IN ('received', 'planning', 'running', 'waiting_for_approval', 'approved')
+                    ORDER BY id DESC
+                    LIMIT ?
+                    """,
+                    (agent_id, limit_per_section),
+                ).fetchall()
+                queued_rows = connection.execute(
+                    """
+                    SELECT
+                        created_at AS date,
+                        title,
+                        COALESCE(summary, goal) AS note,
+                        status
+                    FROM tasks
+                    WHERE owner_agent_id = ?
+                        AND status IN ('received', 'waiting_for_approval')
+                    ORDER BY id DESC
+                    LIMIT ?
+                    """,
+                    (agent_id, limit_per_section),
+                ).fetchall()
+                journals[agent_id] = {
+                    "completed": [self._journal_entry(row) for row in completed_rows],
+                    "inProgress": [self._journal_entry(row) for row in in_progress_rows],
+                    "queued": [self._journal_entry(row) for row in queued_rows],
+                }
+
+        return {"journals": journals, "source": "sqlite"}
 
     def recent_memory_entries(self, limit: int = 10) -> list[dict]:
         with self._connect() as connection:
@@ -797,7 +874,7 @@ class MemoryStore:
         return {
             "sources": [self._decode_learning_source(row) for row in source_rows],
             "insights": [self._decode_evidence(row) for row in insight_rows],
-            "guardrail": "Connected plugin learning requires explicit approval before N.E.X.U.S reads personal connector data.",
+            "guardrail": "Connected plugin learning requires explicit approval before R.A.M.B.O. reads personal connector data.",
         }
 
     def record_learning_from_goal(self, goal: str) -> list[dict]:
@@ -820,7 +897,7 @@ class MemoryStore:
             (
                 "self_improvement",
                 "Daniel values self-improvement and personal operating structure",
-                "Daniel is asking N.E.X.U.S to learn preferences, improve routines, and understand him over time.",
+                "Daniel is asking R.A.M.B.O. to learn preferences, improve routines, and understand him over time.",
                 ["learn me", "learning me", "self", "habit", "routine", "person", "over time", "improve"],
                 0.7,
             ),
@@ -990,6 +1067,51 @@ class MemoryStore:
             "guardrail": "Steward tracks and guides; it does not move money, trade, or connect accounts without approval.",
         }
 
+    def steward_budget_state(self) -> dict | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT payload, updated_at
+                FROM steward_budget_state
+                WHERE id = 'default'
+                """
+            ).fetchone()
+        if row is None:
+            return None
+        try:
+            payload = json.loads(row["payload"])
+        except json.JSONDecodeError:
+            payload = {}
+        return {"state": payload, "updated_at": row["updated_at"], "source": "sqlite"}
+
+    def save_steward_budget_state(self, state: dict) -> dict:
+        now = utc_now()
+        with self._connect() as connection:
+            existing = connection.execute(
+                "SELECT created_at FROM steward_budget_state WHERE id = 'default'"
+            ).fetchone()
+            created_at = existing["created_at"] if existing else now
+            connection.execute(
+                """
+                INSERT INTO steward_budget_state (id, created_at, updated_at, payload)
+                VALUES ('default', ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                    updated_at = excluded.updated_at,
+                    payload = excluded.payload
+                """,
+                (created_at, now, self._to_json(state)),
+            )
+
+        self.upsert_learning_insight(
+            category="financial_tracking",
+            title="Steward planner is being used as Daniel's manual budget workspace",
+            detail="Daniel is entering budget planner data directly into R.A.M.B.O., stored locally in SQLite.",
+            confidence=0.82,
+            source_id="local_goals",
+            evidence=[{"saved_at": now, "sections": sorted(state.keys())}],
+        )
+        return {"ok": True, "state": state, "updated_at": now, "source": "sqlite"}
+
     def add_expense(self, amount: float, category: str, description: str, spent_at: str | None = None) -> dict:
         created_at = utc_now()
         spent_at = spent_at or created_at
@@ -1043,7 +1165,7 @@ class MemoryStore:
         self.upsert_learning_insight(
             category="financial_tracking",
             title="Daniel is tracking expenses with Steward",
-            detail="Daniel is starting to use N.E.X.U.S for expense awareness and budgeting.",
+            detail="Daniel is starting to use R.A.M.B.O. for expense awareness and budgeting.",
             confidence=0.78,
             source_id="local_goals",
             evidence=[{"category": category, "amount": amount, "description": description}],
@@ -1175,6 +1297,15 @@ class MemoryStore:
 
     def _to_json(self, value: object) -> str:
         return json.dumps(value, ensure_ascii=True)
+
+    def _journal_entry(self, row: sqlite3.Row) -> dict:
+        date = str(row["date"] or "")
+        return {
+            "date": date[:10],
+            "title": row["title"],
+            "note": row["note"] or "",
+            "status": row["status"],
+        }
 
     def _approval_detail(self, connection: sqlite3.Connection, approval_id: int) -> sqlite3.Row | None:
         return connection.execute(

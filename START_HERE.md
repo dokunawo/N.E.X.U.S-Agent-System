@@ -1,20 +1,20 @@
-# N.E.X.U.S - Start Here
+# R.A.M.B.O. - Start Here
 
-This folder is the home base for your N.E.X.U.S operating system project.
+This folder is the home base for your R.A.M.B.O. operating system project.
 
 You do not need to be a developer to understand the basic idea:
 
 - The dashboard is the face.
 - The backend is the engine.
-- N.E.X.U.S is the overall operator.
-- The smaller agents are specialists with specific jobs.
+- R.A.M.B.O. is the overall operator.
+- The smaller Brains are specialists with specific jobs.
 - The memory database is the notebook.
-- Future integrations are the apps and services N.E.X.U.S will learn from.
+- Future integrations are the apps and services R.A.M.B.O. will learn from.
 
 Tagline:
 
 ```text
-Everything Connects Here.
+Autonomy. Precision. Execution.
 ```
 
 ## Current Status
@@ -26,8 +26,8 @@ It can:
 - Open a dashboard in the browser.
 - Accept a question like "How is my app doing today?"
 - Show mock business/app stats.
-- Run a simple N.E.X.U.S orchestrator.
-- Show what each specialist agent did.
+- Run a simple R.A.M.B.O. orchestrator.
+- Show what each specialist Brain did.
 - Suggest next steps.
 - Save recent runs in memory.
 - Run without an OpenAI API key.
@@ -38,7 +38,7 @@ It can:
 Run this from PowerShell:
 
 ```powershell
-C:\Users\dokun\Documents\Codex\Jarvis-Agent\Start-NEXUS.ps1
+C:\Users\dokun\Documents\Codex\Jarvis-Agent\Start-RAMBO.ps1
 ```
 
 Then open:
@@ -55,7 +55,7 @@ If port 8000 is already being used, the script will try port 8001.
 Jarvis-Agent/
   START_HERE.md          You are here.
   AGENTS.md              Instructions Codex should follow in this project.
-  Start-NEXUS.ps1        Starts the local dashboard server.
+  Start-RAMBO.ps1        Starts the local dashboard server.
   Start-Jarvis.ps1       Older starter script kept for compatibility.
   app/                   The current working MVP.
   docs/                  Beginner explanations and roadmap.
@@ -82,7 +82,13 @@ For normal work, use Local mode. Use Worktree mode later when you want Codex to 
 
 Before adding voice, connect one real data source.
 
-The reason is simple: a talking N.E.X.U.S is cool, but a useful N.E.X.U.S needs real information first.
+The reason is simple: a talking R.A.M.B.O. is cool, but a useful R.A.M.B.O. needs real information first.
+
+Boot phrase:
+
+```text
+R.A.M.B.O. online. Systems synchronized. Standing by for your command.
+```
 
 Good first integrations:
 

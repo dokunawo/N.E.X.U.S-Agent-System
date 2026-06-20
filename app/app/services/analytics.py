@@ -64,9 +64,9 @@ class AnalyticsService:
             ],
             "agent_roster": [
                 {
-                    "name": "N.E.X.U.S",
+                    "name": "R.A.M.B.O.",
                     "status": "online",
-                    "task": "Operating as the command layer over the agent network.",
+                    "task": "Operating as the command layer over the Brain network.",
                     "confidence": 0.95,
                 },
                 {

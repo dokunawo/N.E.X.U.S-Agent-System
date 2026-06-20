@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>N.E.X.U.S</title>
+<title>R.A.M.B.O.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 
@@ -12,10 +12,10 @@
 <div class="app-shell">
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-mark">N</div>
-    <div class="brand-text"><div class="t1">N.E.X.U.S</div></div>
+    <div class="brand-mark">R</div>
+    <div class="brand-text"><div class="t1">R.A.M.B.O.</div></div>
   </div>
-  <nav><a class="nav-item active" href="index.html" style="--node-color:#00e5ff"><span class="nav-icon">NX</span><span>N.E.X.U.S</span></a><div class="nav-group-label">COUNCIL</div><a class="nav-item" href="round-table.html" style="--node-color:#00e5ff"><span class="nav-icon">RT</span><span>Round Table</span></a><div class="nav-group-label">SPECIALISTS</div><a class="nav-item" href="agents/architect.html" style="--node-color:#8B7FFF"><span class="nav-dot"></span>
+  <nav><a class="nav-item active" href="index.html" style="--node-color:#FF2E2E"><span class="nav-icon">RB</span><span>R.A.M.B.O.</span></a><div class="nav-group-label">COUNCIL</div><a class="nav-item" href="round-table.html" style="--node-color:#FF7A00"><span class="nav-icon">RT</span><span>Round Table</span></a><div class="nav-group-label">BRAINS</div><a class="nav-item" href="agents/architect.html" style="--node-color:#8B7FFF"><span class="nav-dot"></span>
     <div class="avatar avatar-architect avatar-nav" aria-hidden="true">
       <span class="avatar-halo"></span>
       <span class="avatar-head"></span>
@@ -92,7 +92,7 @@
       <span class="avatar-body"></span>
       <span class="avatar-accent"></span>
       <span class="avatar-glyph">AP</span>
-    </div><span>Approvals</span></a><a class="nav-item" href="system/learning.html" style="--node-color:#00E5FF"><span class="nav-dot"></span>
+    </div><span>Approvals</span></a><a class="nav-item" href="system/learning.html" style="--node-color:#FF2E2E"><span class="nav-dot"></span>
     <div class="avatar avatar-learning avatar-nav" aria-hidden="true">
       <span class="avatar-halo"></span>
       <span class="avatar-head"></span>
@@ -103,25 +103,51 @@
 </aside>
   <main class="main nexus-home">
     <div class="topbar">
-    <div class="crumb"><b>N.E.X.U.S</b></div>
+    <div class="crumb"><b>R.A.M.B.O.</b></div>
     <div style="display:flex;align-items:center;">
-      <div class="status-pill"><span class="dot"></span>ALL SYSTEMS NOMINAL</div>
+      <div class="status-pill"><span class="dot"></span>R.A.M.B.O. ONLINE</div>
       <div class="clock" id="sys-clock">--:--:--</div>
     </div>
   </div>
 
+    <section class="daily-briefing-panel fade-in" data-daily-briefing>
+      <div class="daily-briefing-head">
+        <div>
+          <div class="section-title">DAILY BRIEFING</div>
+          <h2 data-briefing-greeting>R.A.M.B.O. is coming online...</h2>
+        </div>
+        <div class="briefing-pill" data-briefing-clock>Detroit status pending</div>
+      </div>
+      <div class="briefing-grid">
+        <div class="briefing-card"><span>Weather</span><strong data-briefing-weather>Loading Detroit weather...</strong></div>
+        <div class="briefing-card"><span>Calendar</span><strong data-briefing-calendar>Calendar not checked yet</strong></div>
+        <div class="briefing-card"><span>Today</span><strong data-briefing-focus>Preparing daily focus...</strong></div>
+        <div class="briefing-card"><span>Approvals</span><strong data-briefing-approvals>Checking Sentinel queue...</strong></div>
+      </div>
+      <div class="briefing-body">
+        <div>
+          <div class="section-title small">BRAIN BRIEFING</div>
+          <div class="briefing-agent-list" data-briefing-agents></div>
+        </div>
+        <div>
+          <div class="section-title small">TODAY'S OPERATING LOOP</div>
+          <div class="briefing-task-list" data-briefing-tasks></div>
+        </div>
+      </div>
+    </section>
+
     <div class="home-banner fade-in">
       <div class="home-title">
-        <h1><b>N.E.X.U.S</b></h1>
+        <h1><b>R.A.M.B.O.</b></h1>
       </div>
-      <p>The central command surface for the whole system. The globe stays in the middle, while each agent's current work, queue, and success signal sits around it.</p>
+      <p>Responsive Autonomous Multi-Brain Operator. A tactical command surface that routes Daniel's intent through specialized Brains, then synthesizes one clear answer.</p>
     </div>
 
     <div class="home-layout landscape">
       <section class="orb-panel large home-orb">
         <div class="orb-panel-head">
-          <div class="orb-panel-title">N.E.X.U.S</div>
-          <div class="orb-panel-subtitle">Central command globe</div>
+          <div class="orb-panel-title">R.A.M.B.O.</div>
+          <div class="orb-panel-subtitle">Tactical command core</div>
         </div>
         <div class="table-stage home-stage">
           <canvas id="core-canvas" class="core-canvas"></canvas>
@@ -137,9 +163,9 @@
       <span class="avatar-head"></span>
       <span class="avatar-body"></span>
       <span class="avatar-accent"></span>
-      <span class="avatar-glyph">N</span>
+      <span class="avatar-glyph">R</span>
     </div>
-            <div class="label mono">N.E.X.U.S</div>
+            <div class="label mono">R.A.M.B.O.</div>
           </div>
           <div class="home-node-wrap"><div class="home-node" style="left:45.92%;top:11.21%;--node-color:#8B7FFF;--node-angle:-96.00">
               <button type="button" class="home-node-toggle" data-node-toggle aria-label="Toggle Architect">
@@ -346,7 +372,7 @@
             <div class="node-bubble-copy">
               <strong>Link</strong>
               <span>API &amp; Integration Design</span>
-              <p>Designs how N.E.X.U.S talks to the outside world.</p>
+              <p>Designs how R.A.M.B.O. talks to the outside world.</p>
               <small>Working on: Calendar .ics ingestion design</small>
             </div>
             <a class="node-bubble-link" href="agents/link.html">Open profile</a>
@@ -446,20 +472,20 @@
       </section>
 
       <section class="panel-card council-panel">
-        <div class="section-title">COUNCIL DATA</div>
+        <div class="section-title">BRAIN DATA</div>
         <div class="council-overview">
           <div class="mini-stat"><span>Seats</span><strong>11</strong></div>
-          <div class="mini-stat"><span>Mode</span><strong>Everything Connects Here.</strong></div>
+          <div class="mini-stat"><span>Mode</span><strong>Autonomy. Precision. Execution.</strong></div>
           <div class="mini-stat"><span>Learning</span><strong>Local memory + approvals</strong></div>
           <div class="mini-stat"><span>Steward</span><strong>Manual finance tracking</strong></div>
         </div>
-        <a class="home-cta" href="round-table.html">View Council Members</a>
+        <a class="home-cta" href="round-table.html">View Brain Roster</a>
         <table class="home-table">
           <thead>
-            <tr><th>Agent</th><th>Done</th><th>Queued</th><th>Signal</th><th>Rate</th></tr>
+            <tr><th>Brain</th><th>Done</th><th>Queued</th><th>Signal</th><th>Rate</th></tr>
           </thead>
           <tbody><tr>
-        <td><span class="table-swatch" style="background:#00E5FF"></span>N.E.X.U.S</td>
+        <td><span class="table-swatch" style="background:#FF2E2E"></span>R.A.M.B.O.</td>
         <td>142</td>
         <td>3</td>
         <td><div class="bar tiny"><span style="width:97%"></span></div></td>
@@ -528,8 +554,23 @@
         </table>
       </section>
 
-      <section class="nexus-overseer-panel fade-in" style="--node-color:#00E5FF;--accent:#00E5FF">
-        <div class="section-title">N.E.X.U.S COMMAND SEAT</div>
+      <section class="workflow-panel fade-in">
+        <div class="section-title">OPERATING LOOP</div>
+        <div class="workflow-intro">
+          Devchain-style routing translated into R.A.M.B.O.: each request moves through capture, planning, validation, build, review, and memory. Sensitive actions still stop at Sentinel.
+        </div>
+        <div class="workflow-steps" data-workflow-steps>
+          <div class="workflow-step"><span>01</span><strong>R.A.M.B.O.</strong><p>Capture the request and define success.</p></div>
+          <div class="workflow-step"><span>02</span><strong>Architect</strong><p>Plan the sequence and dependencies.</p></div>
+          <div class="workflow-step"><span>03</span><strong>Seeker + Analyst</strong><p>Validate facts, data, and assumptions.</p></div>
+          <div class="workflow-step"><span>04</span><strong>Engineer + Link</strong><p>Build the local capability or integration.</p></div>
+          <div class="workflow-step"><span>05</span><strong>Sentinel</strong><p>Review risk and approval boundaries.</p></div>
+          <div class="workflow-step"><span>06</span><strong>Keeper + Pilot</strong><p>Record the handoff and queue next work.</p></div>
+        </div>
+      </section>
+
+      <section class="nexus-overseer-panel fade-in" style="--node-color:#FF2E2E;--accent:#FF2E2E">
+        <div class="section-title">R.A.M.B.O. COMMAND SEAT</div>
         <div class="nexus-overseer-grid">
           <div class="nexus-overseer-identity">
             
@@ -538,12 +579,12 @@
       <span class="avatar-head"></span>
       <span class="avatar-body"></span>
       <span class="avatar-accent"></span>
-      <span class="avatar-glyph">N</span>
+      <span class="avatar-glyph">R</span>
     </div>
             <div>
-              <h2>N.E.X.U.S</h2>
-              <div class="overseer-role">Overseer &amp; Synthesizer</div>
-              <p>N.E.X.U.S is the operator, not a specialist. It receives the request, decides which agents to wake, reviews what each one returns, and is the sole agent authorized to hand Daniel a final recommendation. Everything else in the council reports up to this seat.</p>
+              <h2>R.A.M.B.O.</h2>
+              <div class="overseer-role">Responsive Autonomous Multi-Brain Operator</div>
+              <p>R.A.M.B.O. is the Responsive Autonomous Multi-Brain Operator. It understands Daniel's intent, breaks it into actionable tasks, routes each task to the correct Brain, checks Sentinel boundaries, and synthesizes the outputs into a clear final answer.</p>
             </div>
           </div>
           <div class="nexus-overseer-stats">
@@ -556,14 +597,14 @@
         <div class="nexus-overseer-body">
           <div class="directive-block">
             <div class="section-title small">CORE DIRECTIVES</div>
-            <ul class="directives"><li>Route every incoming request to the correct specialist agent(s)</li><li>Reconcile conflicting agent outputs before presenting a single answer</li><li>Hold final authority on what gets surfaced to the dashboard</li><li>Escalate to Sentinel before anything irreversible happens</li></ul>
+            <ul class="directives"><li>Understand Daniel's intent and define the real success condition</li><li>Route every task to the correct specialized Brain</li><li>Synthesize Brain outputs into one clear final answer</li><li>Escalate to Sentinel before money, messages, deletion, private data exposure, or account connections</li></ul>
           </div>
           <div class="home-journal-block">
             <div class="section-title small">MISSION JOURNAL</div>
-            <div class="journal-cols compact-journal">
-    <div class="journal-col completed"><h4>RECENTLY COMPLETED</h4><div class="j-entry"><div class="j-date">2026-06-19</div>
-      <div class="j-title">Synthesized morning briefing</div>
-      <div class="j-note">Pulled outputs from Analyst and Pilot, merged into a single 3-item priority list for the dashboard.</div>
+            <div class="journal-cols compact-journal" data-agent-journal="nexus">
+    <div class="journal-col completed" data-journal-column="completed"><h4>RECENTLY COMPLETED</h4><div class="j-entry"><div class="j-date">2026-06-19</div>
+      <div class="j-title">Boot persona installed</div>
+      <div class="j-note">Adopted the Responsive Autonomous Multi-Brain Operator identity, mission statement, tactical palette, and Brain routing model.</div>
     </div><div class="j-entry"><div class="j-date">2026-06-18</div>
       <div class="j-title">Resolved agent conflict</div>
       <div class="j-note">Architect and Engineer disagreed on build order for the Round Table UI. Sided with Architect's sequencing, logged the reasoning.</div>
@@ -571,13 +612,13 @@
       <div class="j-title">Routed budget request</div>
       <div class="j-note">Forwarded 'set up a savings goal' request to Steward, confirmed Sentinel sign-off wasn't required (no money moved, manual entry only).</div>
     </div></div>
-    <div class="journal-col inprogress"><h4>IN PROGRESS</h4><div class="j-entry">
-      <div class="j-title">Council page rollout</div>
-      <div class="j-note">Watching Engineer build out the per-agent detail pages and journal sections.</div>
+    <div class="journal-col inprogress" data-journal-column="inProgress"><h4>IN PROGRESS</h4><div class="j-entry">
+      <div class="j-title">Brain routing layer</div>
+      <div class="j-note">Translating the old council/agent structure into the R.A.M.B.O. Brain model while keeping backend routes stable.</div>
     </div></div>
-    <div class="journal-col queued"><h4>QUEUED</h4><div class="j-entry">
-      <div class="j-title">Define escalation matrix v2</div>
-      <div class="j-note">Formalize which task types route through Sentinel vs. straight to N.E.X.U.S.</div>
+    <div class="journal-col queued" data-journal-column="queued"><h4>QUEUED</h4><div class="j-entry">
+      <div class="j-title">Dispatch loop v1</div>
+      <div class="j-note">Create the first low-risk handoff loop so Brains can pass work to each other and Keeper can record the trail.</div>
     </div><div class="j-entry">
       <div class="j-title">Weekly digest format</div>
       <div class="j-note">Design a Sunday-night summary pulling from every agent's completed log.</div>
@@ -589,7 +630,7 @@
     </div>
 
     <footer class="foot">
-    <span>N.E.X.U.S &mdash; Everything Connects Here.</span>
+    <span>R.A.M.B.O. &mdash; Autonomy. Precision. Execution.</span>
     <span>Build 2026-06-19</span>
   </footer>
   </main>

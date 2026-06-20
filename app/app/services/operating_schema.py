@@ -47,10 +47,10 @@ MEMORY_KINDS = [
 AGENT_ROSTER = [
     {
         "id": "nexus",
-        "name": "N.E.X.U.S",
+        "name": "R.A.M.B.O.",
         "role": "Overall operator",
-        "purpose": "Coordinate the agent network and combine final advice for Daniel.",
-        "access_scope": "Can route work, summarize results, and request support from specialized agents.",
+        "purpose": "Coordinate the Brain network and combine final advice for Daniel.",
+        "access_scope": "Can route work, summarize results, and request support from specialized Brains.",
         "risk_boundary": "Must ask Sentinel and Daniel before sensitive or difficult-to-reverse actions.",
         "default_status": "online",
     },
@@ -112,7 +112,7 @@ AGENT_ROSTER = [
         "id": "link",
         "name": "Link",
         "role": "API and integration design",
-        "purpose": "Connect N.E.X.U.S to outside services.",
+        "purpose": "Connect R.A.M.B.O. to outside services.",
         "access_scope": "Can design and test integrations in mock mode first.",
         "risk_boundary": "Must ask before connecting accounts or exposing private data.",
         "default_status": "standby",
@@ -209,7 +209,7 @@ DATA_SOURCES = [
         "kind": "local_input",
         "status": "active",
         "privacy_level": "sensitive",
-        "detail": "Local budget, expense, savings, and investment entries Daniel types into N.E.X.U.S.",
+        "detail": "Local budget, expense, savings, and investment entries Daniel types into R.A.M.B.O.",
     },
     {
         "id": "market_context",
@@ -229,7 +229,7 @@ LEARNING_SOURCES = [
         "status": "active",
         "privacy_level": "private",
         "consent_required": False,
-        "detail": "Learns from goals Daniel types directly into N.E.X.U.S.",
+        "detail": "Learns from goals Daniel types directly into R.A.M.B.O.",
     },
     {
         "id": "approval_history",

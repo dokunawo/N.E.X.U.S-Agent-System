@@ -65,13 +65,13 @@ class StrategyAgent:
         suggestions = [
             "Investigate checkout errors before scaling acquisition spend.",
             "Promote the onboarding flow that is converting best this week.",
-            "Create a daily N.E.X.U.S status report comparing priorities, risks, and opportunities.",
+            "Create a daily R.A.M.B.O. status report comparing priorities, risks, and opportunities.",
         ]
         return (
             AgentEvent(
                 self.name,
                 "complete",
-                "Prepared the highest-impact next actions for N.E.X.U.S.",
+                "Prepared the highest-impact next actions for R.A.M.B.O.",
             ),
             suggestions,
         )
@@ -92,7 +92,7 @@ class Orchestrator:
         self.memory = memory
         self.openai = OpenAIBridge()
         self.agents = [
-            StandbyAgent("N.E.X.U.S", "Coordinated the active agent pass."),
+            StandbyAgent("R.A.M.B.O.", "Coordinated the active Brain pass."),
             StandbyAgent("Architect", "Reviewed the request for planning context."),
             AnalyticsAgent(),
             ReliabilityAgent(),
@@ -136,7 +136,7 @@ class Orchestrator:
                 AgentEvent(
                     "Sentinel",
                     "approval_required",
-                    f"Approval required before N.E.X.U.S takes this {risk['level']} risk action.",
+                    f"Approval required before R.A.M.B.O. takes this {risk['level']} risk action.",
                 ).as_dict()
             )
             suggestions.insert(0, "Review the pending approval before any sensitive action is taken.")
@@ -147,7 +147,7 @@ class Orchestrator:
 
         if approval:
             summary = (
-                f"{summary} Sentinel marked the requested action as {risk['level']} risk, so N.E.X.U.S "
+                f"{summary} Sentinel marked the requested action as {risk['level']} risk, so R.A.M.B.O. "
                 "logged an approval request and will wait for Daniel before taking action."
             )
 
@@ -183,7 +183,7 @@ class Orchestrator:
             f"{metrics['Active users']['value']} ({metrics['Active users']['delta']}), revenue is "
             f"{metrics['Revenue today']['value']} ({metrics['Revenue today']['delta']}), and conversion is "
             f"{metrics['Conversion']['value']}. The main thing to watch is checkout reliability, with "
-            f"{metrics['Error events']['value']} error events today. N.E.X.U.S would fix that before pushing a bigger "
+            f"{metrics['Error events']['value']} error events today. R.A.M.B.O. would fix that before pushing a bigger "
             "growth campaign."
         )
 

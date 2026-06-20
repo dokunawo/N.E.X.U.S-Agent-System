@@ -1,12 +1,12 @@
-# N.E.X.U.S Dashboard MVP
+# R.A.M.B.O. Dashboard MVP
 
-A local N.E.X.U.S operating system dashboard scaffold.
+A local R.A.M.B.O. operating system dashboard scaffold.
 
 This v0 gives you the core shape of the system:
 
 - FastAPI backend
 - Browser dashboard
-- N.E.X.U.S orchestrator
+- R.A.M.B.O. orchestrator
 - Specialized mock agents
 - Mock app analytics
 - SQLite task, agent, log, memory, approval, and source schema
@@ -17,7 +17,7 @@ The app runs without an API key. It uses deterministic mock data until you conne
 ## Project Layout
 
 ```text
-nexus-dashboard-mvp/
+rambo-dashboard-mvp/
   app/
     main.py
     services/
@@ -52,16 +52,16 @@ Open:
 http://127.0.0.1:8000
 ```
 
-From the project root, you can also use the N.E.X.U.S launcher:
+From the project root, you can also use the R.A.M.B.O. launcher:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\Start-NEXUS.ps1
+powershell -ExecutionPolicy Bypass -File .\Start-RAMBO.ps1
 ```
 
 To start it in the background:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\Start-NEXUS.ps1 -Background
+powershell -ExecutionPolicy Bypass -File .\Start-RAMBO.ps1 -Background
 ```
 
 The background launcher writes the server PID and logs into the `data` folder.

@@ -1,6 +1,6 @@
 # The Round Table — README
 
-Static, dependency-free build of N.E.X.U.S's council UI. Pure HTML/CSS/JS —
+Static, dependency-free build of R.A.M.B.O.'s council UI. Pure HTML/CSS/JS —
 no build step, no npm, no framework. Matches AGENTS.md's own technical
 default: "Frontend: simple browser dashboard first."
 
@@ -8,12 +8,12 @@ default: "Frontend: simple browser dashboard first."
 
 ```
 round-table/
-  index.html              N.E.X.U.S home — landscape council dashboard
+  index.html              R.A.M.B.O. home — landscape council dashboard
   round-table.html        Council hub — radial Round Table + 3D core
   agents/<id>.html         11 pages: nexus, architect, engineer, seeker,
                             analyst, sentinel, steward, link, keeper, echo, pilot
   system/approvals.html    Sentinel's cross-agent approval queue
-  system/learning.html     N.E.X.U.S's own learning log
+  system/learning.html     R.A.M.B.O.'s own learning log
   assets/style.css         Full design system (HUD theme, all components)
   assets/app.js            Live clock + stat counters + home node bubbles
   assets/core3d.js         Three.js core animation (every page with a core-canvas)
@@ -42,7 +42,7 @@ python3 build_pages.py
 
 That regenerates the full council set in under a second, consistently.
 
-## Wiring this into N.E.X.U.S itself
+## Wiring this into R.A.M.B.O. itself
 
 Two honest options, ranked:
 

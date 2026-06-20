@@ -38,7 +38,7 @@ def wait_for_health(url: str, timeout_seconds: float) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Start the N.E.X.U.S FastAPI server in the background.")
+    parser = argparse.ArgumentParser(description="Start the R.A.M.B.O. FastAPI server in the background.")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--max-port", type=int, default=8010)
@@ -54,9 +54,9 @@ def main() -> int:
     python = venv_python if venv_python.exists() else Path(sys.executable)
     port = find_port(args.host, args.port, args.max_port)
 
-    stdout_log = data_root / f"nexus-server-{port}.out.log"
-    stderr_log = data_root / f"nexus-server-{port}.err.log"
-    pid_file = data_root / f"nexus-server-{port}.pid"
+    stdout_log = data_root / f"rambo-server-{port}.out.log"
+    stderr_log = data_root / f"rambo-server-{port}.err.log"
+    pid_file = data_root / f"rambo-server-{port}.pid"
 
     env = os.environ.copy()
     env["PYTHONPATH"] = str(app_root)

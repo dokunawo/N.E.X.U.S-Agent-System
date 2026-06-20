@@ -1,16 +1,16 @@
 :root {
   color-scheme: dark;
-  --ink: #f4f7fb;
-  --muted: #9aa9b8;
-  --line: rgba(128, 218, 230, 0.18);
-  --panel: #121923;
-  --bg: #080c12;
-  --sidebar: #0a0f16;
-  --sidebar-soft: #14202b;
+  --ink: #f2f2f2;
+  --muted: #a7adb8;
+  --line: rgba(255, 46, 46, 0.2);
+  --panel: #111217;
+  --bg: #050507;
+  --sidebar: #0b0c10;
+  --sidebar-soft: #2a2d33;
   --green: #34d399;
-  --teal: #18d6e8;
-  --amber: #f6b94b;
-  --red: #f87171;
+  --teal: #ff2e2e;
+  --amber: #ff7a00;
+  --red: #ff2e2e;
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
@@ -61,8 +61,8 @@ input {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 8px;
-  background: #18d6e8;
-  color: #061018;
+  background: #ff2e2e;
+  color: #050507;
   font-weight: 800;
 }
 
@@ -187,7 +187,7 @@ input {
   min-width: 84px;
   padding: 11px 18px;
   background: var(--teal);
-  color: #061018;
+  color: #050507;
 }
 
 .metric-grid {

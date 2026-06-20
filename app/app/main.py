@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from app.services.analytics import AnalyticsService
+from app.services.briefing import BriefingService
 from app.services.memory import MemoryStore
 from app.services.orchestrator import Orchestrator
 
@@ -18,10 +19,11 @@ COUNCIL_DIR = ROOT.parent / "round-table"
 analytics = AnalyticsService()
 memory = MemoryStore()
 orchestrator = Orchestrator(analytics=analytics, memory=memory)
+briefing = BriefingService(memory=memory)
 
 app = FastAPI(
-    title="N.E.X.U.S Dashboard MVP",
-    description="A local multi-agent dashboard scaffold with mock analytics and memory.",
+    title="R.A.M.B.O. Dashboard MVP",
+    description="A local multi-Brain command-center scaffold with mock analytics and SQLite memory.",
     version="0.1.0",
 )
 
@@ -76,6 +78,10 @@ class InvestmentPositionRequest(BaseModel):
     notes: str = Field("", max_length=300)
 
 
+class StewardBudgetStateRequest(BaseModel):
+    state: dict = Field(default_factory=dict)
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(STATIC_DIR / "index.html")
@@ -91,7 +97,7 @@ def health() -> dict:
     return {
         "ok": True,
         "mode": orchestrator.mode,
-        "service": "nexus-dashboard-mvp",
+        "service": "rambo-dashboard-mvp",
     }
 
 
@@ -104,6 +110,11 @@ def dashboard() -> dict:
         "operating": memory.operating_snapshot(limit=8),
         "mode": orchestrator.mode,
     }
+
+
+@app.get("/api/briefing/daily")
+def daily_briefing() -> dict:
+    return briefing.daily_briefing()
 
 
 @app.post("/api/run")
@@ -136,6 +147,11 @@ def get_logs() -> dict:
     return {"logs": memory.recent_logs(limit=50)}
 
 
+@app.get("/api/council/journals")
+def get_council_journals() -> dict:
+    return memory.council_journals(limit_per_section=8)
+
+
 @app.get("/api/memory/entries")
 def get_memory_entries() -> dict:
     return {"memory_entries": memory.recent_memory_entries(limit=25)}
@@ -154,6 +170,19 @@ def get_learning() -> dict:
 @app.get("/api/finance")
 def get_finance() -> dict:
     return memory.finance_snapshot(limit=25)
+
+
+@app.get("/api/steward/budget")
+def get_steward_budget() -> dict:
+    saved = memory.steward_budget_state()
+    if saved is None:
+        return {"state": None, "source": "default"}
+    return saved
+
+
+@app.put("/api/steward/budget")
+def save_steward_budget(request: StewardBudgetStateRequest) -> dict:
+    return memory.save_steward_budget_state(request.state)
 
 
 @app.post("/api/finance/expenses")

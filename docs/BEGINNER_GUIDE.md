@@ -1,19 +1,19 @@
-# Beginner Guide: What N.E.X.U.S Is
+# Beginner Guide: What R.A.M.B.O. Is
 
 This guide explains the project in normal language.
 
 ## The Simple Version
 
-N.E.X.U.S is the beginning of your personal operating system.
+R.A.M.B.O. is the beginning of your personal operating system.
 
 It is not only a chatbot. It is meant to become a command center that can coordinate different agents, understand your daily priorities, check useful information, remember what happened, and recommend what to do next.
 
-One of the agents inside N.E.X.U.S can be a personal assistant, but N.E.X.U.S itself is bigger than that. N.E.X.U.S is the operator over the full system.
+One of the agents inside R.A.M.B.O. can be a personal assistant, but R.A.M.B.O. itself is bigger than that. R.A.M.B.O. is the operator over the full system.
 
 Tagline:
 
 ```text
-Everything Connects Here.
+Autonomy. Precision. Execution.
 ```
 
 ## Why We Are Building It In Layers
@@ -47,7 +47,7 @@ The current MVP can:
 - Open a dashboard in the browser.
 - Accept a question or command.
 - Show mock operational stats.
-- Route the request through a simple N.E.X.U.S orchestrator.
+- Route the request through a simple R.A.M.B.O. orchestrator.
 - Show agent activity.
 - Suggest next steps.
 - Save recent runs in memory.
@@ -58,14 +58,14 @@ Right now, the data is still mock data. That means it is fake but shaped like re
 
 ### Dashboard
 
-The dashboard is the face of N.E.X.U.S.
+The dashboard is the face of R.A.M.B.O.
 
 It shows:
 
 - Command input.
 - Today-style metrics.
 - A trend chart.
-- N.E.X.U.S response.
+- R.A.M.B.O. response.
 - Agent activity.
 - Suggestions.
 - Recent memory.
@@ -76,9 +76,9 @@ The backend is the engine running behind the dashboard.
 
 It receives requests from the dashboard and sends back answers, metrics, agent activity, and memory.
 
-### N.E.X.U.S Operator
+### R.A.M.B.O. Operator
 
-N.E.X.U.S is the overseer of the whole system.
+R.A.M.B.O. is the overseer of the whole system.
 
 It should eventually decide:
 
@@ -102,29 +102,29 @@ The agent roster is:
 - Echo: conversation and user-facing communication.
 - Pilot: task tracking and follow-up.
 
-Only N.E.X.U.S should give the final advice after weighing what the other agents found.
+Only R.A.M.B.O. should give the final advice after weighing what the other agents found.
 
 ## Wake Phrase Direction
 
 Primary:
 
 ```text
-Nexus, come online.
+Rambo, come online.
 ```
 
 Sub phrases:
 
 ```text
-Nexus, status.
-Nexus, lock in.
-Nexus, stand by.
+Rambo, status.
+Rambo, lock in.
+Rambo, stand by.
 ```
 
-These phrases imply that you are the owner and N.E.X.U.S is responding to your command.
+These phrases imply that you are the owner and R.A.M.B.O. is responding to your command.
 
 ## Safety Direction
 
-N.E.X.U.S should never do sensitive things without approval.
+R.A.M.B.O. should never do sensitive things without approval.
 
 Examples:
 
@@ -136,7 +136,7 @@ Examples:
 - Connect bank accounts.
 - Make major system-wide changes.
 
-Lower-risk helpful changes can be allowed, but N.E.X.U.S should tell you what changed and keep it reversible.
+Lower-risk helpful changes can be allowed, but R.A.M.B.O. should tell you what changed and keep it reversible.
 
 ## Best Next Step
 

@@ -1,6 +1,6 @@
-# N.E.X.U.S Roadmap
+# R.A.M.B.O. Roadmap
 
-This is the living roadmap for the N.E.X.U.S operating system.
+This is the living roadmap for the R.A.M.B.O. operating system.
 
 ## Phase 1: Foundation
 
@@ -15,7 +15,7 @@ Included now:
 - Browser dashboard.
 - FastAPI backend.
 - Mock analytics.
-- Simple N.E.X.U.S orchestrator.
+- Simple R.A.M.B.O. orchestrator.
 - Early agent activity feed.
 - Suggestions.
 - SQLite memory log.
@@ -25,14 +25,14 @@ Included now:
 
 Goal:
 
-Turn N.E.X.U.S from a visual demo into a planned operating system.
+Turn R.A.M.B.O. from a visual demo into a planned operating system.
 
 Decisions:
 
-- Name: N.E.X.U.S.
-- Tagline: Everything Connects Here.
+- Name: R.A.M.B.O.
+- Tagline: Autonomy. Precision. Execution.
 - Personality: calm command center, sharp operator, creative partner, guardian.
-- Primary wake phrase: "Nexus, come online."
+- Primary wake phrase: "Rambo, come online."
 - Agent roster: Architect, Engineer, Seeker, Analyst, Sentinel, Steward, Link, Keeper, Echo, Pilot.
 
 ## Phase 3: Task, Agent, Log, And Approval Structure
@@ -76,11 +76,11 @@ Wait on:
 - Sending messages automatically.
 - Anything that exposes private information externally.
 
-## Phase 5: Smarter N.E.X.U.S Reasoning
+## Phase 5: Smarter R.A.M.B.O. Reasoning
 
 Goal:
 
-Make N.E.X.U.S combine information from the agents and give useful advice.
+Make R.A.M.B.O. combine information from the agents and give useful advice.
 
 Examples:
 
@@ -118,14 +118,14 @@ Visual direction:
 
 Goal:
 
-Let you speak to N.E.X.U.S and hear it respond.
+Let you speak to R.A.M.B.O. and hear it respond.
 
 Wake phrase set:
 
-- "Nexus, come online."
-- "Nexus, status."
-- "Nexus, lock in."
-- "Nexus, stand by."
+- "Rambo, come online."
+- "Rambo, status."
+- "Rambo, lock in."
+- "Rambo, stand by."
 
 Voice should come after the dashboard and data loop are useful.
 
@@ -133,7 +133,7 @@ Voice should come after the dashboard and data loop are useful.
 
 Goal:
 
-Allow N.E.X.U.S to improve over time while staying controlled.
+Allow R.A.M.B.O. to improve over time while staying controlled.
 
 Examples:
 
@@ -151,7 +151,7 @@ Self-improvement should be logged, reversible, and approval-gated when it change
 
 Goal:
 
-Give N.E.X.U.S a dedicated financial tracking and budgeting agent.
+Give R.A.M.B.O. a dedicated financial tracking and budgeting agent.
 
 Steward should help with:
 
@@ -170,7 +170,7 @@ Steward can track, analyze, and guide. It cannot move money, trade, connect fina
 
 Goal:
 
-Eventually run N.E.X.U.S as a serious operating system.
+Eventually run R.A.M.B.O. as a serious operating system.
 
 Cloud can handle:
 

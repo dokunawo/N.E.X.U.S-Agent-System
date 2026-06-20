@@ -12,10 +12,10 @@
 <div class="app-shell">
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-mark">N</div>
-    <div class="brand-text"><div class="t1">N.E.X.U.S</div></div>
+    <div class="brand-mark">R</div>
+    <div class="brand-text"><div class="t1">R.A.M.B.O.</div></div>
   </div>
-  <nav><a class="nav-item" href="../index.html" style="--node-color:#00e5ff"><span class="nav-icon">NX</span><span>N.E.X.U.S</span></a><div class="nav-group-label">COUNCIL</div><a class="nav-item" href="../round-table.html" style="--node-color:#00e5ff"><span class="nav-icon">RT</span><span>Round Table</span></a><div class="nav-group-label">SPECIALISTS</div><a class="nav-item" href="../agents/architect.html" style="--node-color:#8B7FFF"><span class="nav-dot"></span>
+  <nav><a class="nav-item" href="../index.html" style="--node-color:#FF2E2E"><span class="nav-icon">RB</span><span>R.A.M.B.O.</span></a><div class="nav-group-label">COUNCIL</div><a class="nav-item" href="../round-table.html" style="--node-color:#FF7A00"><span class="nav-icon">RT</span><span>Round Table</span></a><div class="nav-group-label">BRAINS</div><a class="nav-item" href="../agents/architect.html" style="--node-color:#8B7FFF"><span class="nav-dot"></span>
     <div class="avatar avatar-architect avatar-nav" aria-hidden="true">
       <span class="avatar-halo"></span>
       <span class="avatar-head"></span>
@@ -92,7 +92,7 @@
       <span class="avatar-body"></span>
       <span class="avatar-accent"></span>
       <span class="avatar-glyph">AP</span>
-    </div><span>Approvals</span></a><a class="nav-item" href="../system/learning.html" style="--node-color:#00E5FF"><span class="nav-dot"></span>
+    </div><span>Approvals</span></a><a class="nav-item" href="../system/learning.html" style="--node-color:#FF2E2E"><span class="nav-dot"></span>
     <div class="avatar avatar-learning avatar-nav" aria-hidden="true">
       <span class="avatar-halo"></span>
       <span class="avatar-head"></span>
@@ -105,7 +105,7 @@
     <div class="topbar">
     <div class="crumb"><b>Engineer</b></div>
     <div style="display:flex;align-items:center;">
-      <div class="status-pill"><span class="dot"></span>ALL SYSTEMS NOMINAL</div>
+      <div class="status-pill"><span class="dot"></span>R.A.M.B.O. ONLINE</div>
       <div class="clock" id="sys-clock">--:--:--</div>
     </div>
   </div>
@@ -175,8 +175,8 @@
 
     <div class="section fade-in">
       <div class="section-title">MISSION JOURNAL</div>
-      <div class="journal-cols">
-    <div class="journal-col completed"><h4>COMPLETED</h4><div class="j-entry"><div class="j-date">2026-06-19</div>
+      <div class="journal-cols" data-agent-journal="engineer">
+    <div class="journal-col completed" data-journal-column="completed"><h4>COMPLETED</h4><div class="j-entry"><div class="j-date">2026-06-19</div>
       <div class="j-title">Round Table shell shipped</div>
       <div class="j-note">Built the shared CSS/JS design system and the agent detail page template.</div>
     </div><div class="j-entry"><div class="j-date">2026-06-19</div>
@@ -186,11 +186,11 @@
       <div class="j-title">Dashboard MVP</div>
       <div class="j-note">Mock-mode dashboard running on port 8000, no API key required.</div>
     </div></div>
-    <div class="journal-col inprogress"><h4>IN PROGRESS</h4><div class="j-entry">
+    <div class="journal-col inprogress" data-journal-column="inProgress"><h4>IN PROGRESS</h4><div class="j-entry">
       <div class="j-title">FastAPI routes for agent pages</div>
       <div class="j-note">Wiring /agents/{id} so the static pages can eventually pull from SQLite instead of baked-in HTML.</div>
     </div></div>
-    <div class="journal-col queued"><h4>QUEUED</h4><div class="j-entry">
+    <div class="journal-col queued" data-journal-column="queued"><h4>QUEUED</h4><div class="j-entry">
       <div class="j-title">Steward backend endpoint</div>
       <div class="j-note">POST /api/steward/budget to persist planner entries to SQLite instead of in-memory state.</div>
     </div><div class="j-entry">
@@ -203,7 +203,7 @@
     
 
     <footer class="foot">
-    <span>N.E.X.U.S &mdash; Everything Connects Here.</span>
+    <span>R.A.M.B.O. &mdash; Autonomy. Precision. Execution.</span>
     <span>Build 2026-06-19</span>
   </footer>
   </main>

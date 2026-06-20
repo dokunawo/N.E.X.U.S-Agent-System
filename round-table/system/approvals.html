@@ -12,10 +12,10 @@
 <div class="app-shell">
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-mark">N</div>
-    <div class="brand-text"><div class="t1">N.E.X.U.S</div></div>
+    <div class="brand-mark">R</div>
+    <div class="brand-text"><div class="t1">R.A.M.B.O.</div></div>
   </div>
-  <nav><a class="nav-item" href="../index.html" style="--node-color:#00e5ff"><span class="nav-icon">NX</span><span>N.E.X.U.S</span></a><div class="nav-group-label">COUNCIL</div><a class="nav-item" href="../round-table.html" style="--node-color:#00e5ff"><span class="nav-icon">RT</span><span>Round Table</span></a><div class="nav-group-label">SPECIALISTS</div><a class="nav-item" href="../agents/architect.html" style="--node-color:#8B7FFF"><span class="nav-dot"></span>
+  <nav><a class="nav-item" href="../index.html" style="--node-color:#FF2E2E"><span class="nav-icon">RB</span><span>R.A.M.B.O.</span></a><div class="nav-group-label">COUNCIL</div><a class="nav-item" href="../round-table.html" style="--node-color:#FF7A00"><span class="nav-icon">RT</span><span>Round Table</span></a><div class="nav-group-label">BRAINS</div><a class="nav-item" href="../agents/architect.html" style="--node-color:#8B7FFF"><span class="nav-dot"></span>
     <div class="avatar avatar-architect avatar-nav" aria-hidden="true">
       <span class="avatar-halo"></span>
       <span class="avatar-head"></span>
@@ -92,7 +92,7 @@
       <span class="avatar-body"></span>
       <span class="avatar-accent"></span>
       <span class="avatar-glyph">AP</span>
-    </div><span>Approvals</span></a><a class="nav-item" href="../system/learning.html" style="--node-color:#00E5FF"><span class="nav-dot"></span>
+    </div><span>Approvals</span></a><a class="nav-item" href="../system/learning.html" style="--node-color:#FF2E2E"><span class="nav-dot"></span>
     <div class="avatar avatar-learning avatar-nav" aria-hidden="true">
       <span class="avatar-halo"></span>
       <span class="avatar-head"></span>
@@ -105,60 +105,51 @@
     <div class="topbar">
     <div class="crumb">THE ROUND TABLE / <b>Approvals</b></div>
     <div style="display:flex;align-items:center;">
-      <div class="status-pill"><span class="dot"></span>ALL SYSTEMS NOMINAL</div>
+      <div class="status-pill"><span class="dot"></span>R.A.M.B.O. ONLINE</div>
       <div class="clock" id="sys-clock">--:--:--</div>
     </div>
   </div>
-    <section class="orb-panel compact">
-      <div class="orb-panel-head">
-        <div class="orb-panel-title">Approvals node</div>
-        <div class="orb-panel-subtitle">Sentinel Approval Queue</div>
-      </div>
-      <div class="orb-stage">
+    
+    <section class="agent-scene system-scene">
+      <div class="agent-node-stage system-node-stage">
         <canvas id="core-canvas" class="core-canvas"></canvas>
-        <div class="orb-satellites"><div class="orb-satellite" style="--sat-angle:-120.00;--sat-color:var(--node-color, var(--cyan))">
-              <span class="orb-satellite-dot"></span>
-              <span class="orb-satellite-copy">
-                <b>Queue</b>
-                <em>Pending approval checks</em>
-              </span>
-            </div><div class="orb-satellite" style="--sat-angle:-40.00;--sat-color:var(--node-color, var(--cyan))">
-              <span class="orb-satellite-dot"></span>
-              <span class="orb-satellite-copy">
-                <b>Owner</b>
-                <em>Sentinel</em>
-              </span>
-            </div><div class="orb-satellite" style="--sat-angle:40.00;--sat-color:var(--node-color, var(--cyan))">
-              <span class="orb-satellite-dot"></span>
-              <span class="orb-satellite-copy">
-                <b>Risk</b>
-                <em>Money, messages, deletion</em>
-              </span>
-            </div><div class="orb-satellite" style="--sat-angle:120.00;--sat-color:var(--node-color, var(--cyan))">
-              <span class="orb-satellite-dot"></span>
-              <span class="orb-satellite-copy">
-                <b>State</b>
-                <em>Ready</em>
-              </span>
-            </div></div>
         <div class="ring-static"></div>
         <div class="ring-static r2"></div>
-        <div class="table-center"><div class="label mono">N.E.X.U.S</div></div>
-      </div>
-      <div class="orb-list compact">
-        <div class="orb-item">
-        <span class="orb-label">Queue</span>
-        <span class="orb-value">Pending approval checks</span>
-      </div><div class="orb-item">
-        <span class="orb-label">Owner</span>
-        <span class="orb-value">Sentinel</span>
-      </div><div class="orb-item">
-        <span class="orb-label">Risk</span>
-        <span class="orb-value">Money, messages, deletion</span>
-      </div><div class="orb-item">
-        <span class="orb-label">State</span>
-        <span class="orb-value">Ready</span>
-      </div>
+        <div class="agent-scene-core system-scene-core">
+          
+    <div class="avatar avatar-approvals avatar-lg" aria-hidden="true">
+      <span class="avatar-halo"></span>
+      <span class="avatar-head"></span>
+      <span class="avatar-body"></span>
+      <span class="avatar-accent"></span>
+      <span class="avatar-glyph">AP</span>
+    </div>
+          <div class="system-core-label">
+            <strong>Approvals</strong>
+            <span>Sentinel Approval Queue</span>
+          </div>
+        </div>
+        <div class="agent-scene-orbits system-scene-orbits"><div class="agent-orbit-bubble system-orbit-bubble" style="--orbit-angle:-70deg;">
+              <div>
+                <span>Queue</span>
+                <strong>Pending approval checks</strong>
+              </div>
+            </div><div class="agent-orbit-bubble system-orbit-bubble" style="--orbit-angle:-18deg;">
+              <div>
+                <span>Owner</span>
+                <strong>Sentinel</strong>
+              </div>
+            </div><div class="agent-orbit-bubble system-orbit-bubble" style="--orbit-angle:28deg;">
+              <div>
+                <span>Risk</span>
+                <strong>Money, messages, deletion</strong>
+              </div>
+            </div><div class="agent-orbit-bubble system-orbit-bubble" style="--orbit-angle:76deg;">
+              <div>
+                <span>State</span>
+                <strong>Ready</strong>
+              </div>
+            </div></div>
       </div>
     </section>
     <div class="page-head fade-in">
@@ -172,18 +163,19 @@
     </div>
       <div>
         <h1>Sentinel Approval Queue</h1>
-        <div class="summary">A cross-agent view of everything waiting on Daniel's sign-off. Anything that spends money, sends a message, deletes a file, or touches a new account lands here before it happens — owned by Sentinel, visible to every agent.</div>
+        <div class="summary">A cross-Brain view of everything waiting on Daniel's sign-off. Anything that spends money, sends a message, deletes a file, or touches a new account lands here before it happens — owned by Sentinel, visible to every Brain.</div>
       </div>
     </div>
-    <div class="section fade-in"><div class="section-title">PENDING QUEUE</div><div class="journal-col"><div class="j-entry"><div class="j-title">None pending</div><div class="j-note">No agent has a request waiting on approval right now. This view will populate live once Sentinel's audit log (Keeper) is wired in.</div></div></div></div>
+    <div class="section fade-in"><div class="section-title">PENDING QUEUE</div><div class="journal-col"><div class="j-entry"><div class="j-title">None pending</div><div class="j-note">No Brain has a request waiting on approval right now. This view will populate live once Sentinel's audit log (Keeper) is wired in.</div></div></div></div>
     <div class="section fade-in"><div class="section-title">RECENT DECISIONS</div><div class="journal-col"><div class="j-entry"><div class="j-date">2026-06-17</div><div class="j-title">Steward manual-entry mode</div><div class="j-note">Auto-cleared — no money moved, no account connected, no approval required.</div></div></div></div>
     <footer class="foot">
-    <span>N.E.X.U.S &mdash; Everything Connects Here.</span>
+    <span>R.A.M.B.O. &mdash; Autonomy. Precision. Execution.</span>
     <span>Build 2026-06-19</span>
   </footer>
   </main>
 </div>
 <script src="../assets/app.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="../assets/core3d.js"></script>
 </body>
 </html>

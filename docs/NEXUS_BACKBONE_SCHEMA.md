@@ -1,8 +1,8 @@
-# N.E.X.U.S Backbone Schema
+# R.A.M.B.O. Backbone Schema
 
 Created: 2026-06-19
 
-This is the first real operating backbone for N.E.X.U.S.
+This is the first real operating backbone for R.A.M.B.O.
 
 The purpose is simple:
 
@@ -17,7 +17,7 @@ Every sensitive action should create an approval request.
 
 ### agents
 
-The official N.E.X.U.S agent roster.
+The official R.A.M.B.O. agent roster.
 
 Each agent has:
 
@@ -32,7 +32,7 @@ This keeps agents from becoming vague. Each one has a job and a limit.
 
 ### tasks
 
-The main record for work N.E.X.U.S is handling.
+The main record for work R.A.M.B.O. is handling.
 
 Each task has:
 
@@ -43,7 +43,7 @@ Each task has:
 - Owner agent.
 - Summary.
 
-This gives Pilot and N.E.X.U.S a real task history to work from.
+This gives Pilot and R.A.M.B.O. a real task history to work from.
 
 ### agent_logs
 
@@ -61,7 +61,7 @@ This is what later powers live agent activity, audit history, and "what happened
 
 ### memory_entries
 
-The useful memory N.E.X.U.S should keep.
+The useful memory R.A.M.B.O. should keep.
 
 Each memory entry has:
 
@@ -109,7 +109,7 @@ This lets Link connect real data later without guessing where it belongs.
 
 ### learning_sources
 
-The allowed places N.E.X.U.S can learn from.
+The allowed places R.A.M.B.O. can learn from.
 
 Current active sources:
 
@@ -125,7 +125,7 @@ This keeps learning curious but controlled.
 
 ### learning_insights
 
-The current things N.E.X.U.S believes it is learning about Daniel.
+The current things R.A.M.B.O. believes it is learning about Daniel.
 
 Each insight has:
 
@@ -199,7 +199,7 @@ POST /api/run
 
 When `POST /api/run` receives a goal:
 
-1. N.E.X.U.S checks the risk level.
+1. R.A.M.B.O. checks the risk level.
 2. The agent roster runs in mock mode.
 3. A task record is created.
 4. Agent log rows are created.

@@ -1,5 +1,5 @@
 // budget.js — Steward's manual budget planner.
-// In-memory only (no localStorage/sessionStorage — see README for why).
+// SQLite-backed through /api/steward/budget. No localStorage/sessionStorage.
 // Every formula here has a matching Excel/Sheets equivalent in the
 // "Formula Reference" panel rendered on steward.html.
 
@@ -26,7 +26,7 @@
   ];
   const INCOME_CATEGORIES = ['Paycheck', 'Interest', 'Dividends'];
 
-  const STATE = {
+  const DEFAULT_STATE = {
     balances: { checking: 157, savings: 210 }, // seeded from your sheet's "Configure" section
     income: INCOME_CATEGORIES.map((name) => ({ id: uid(), name, amount: 0 })),
     expenses: EXPENSE_CATEGORIES.map((name) => ({ id: uid(), name, budgeted: 0, actual: 0 })),
@@ -40,6 +40,86 @@
       { id: uid(), name: 'Example card (edit me)', balance: 1200, apr: 22, minPayment: 75 }
     ]
   };
+  let STATE = cloneState(DEFAULT_STATE);
+  let saveTimer = null;
+  let lastSavedAt = null;
+
+  function cloneState(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function setSaveStatus(message, mode) {
+    const el = document.getElementById('budget-save-status');
+    if (!el) return;
+    el.textContent = message;
+    el.dataset.mode = mode || 'idle';
+  }
+
+  function ensureIds(list) {
+    return Array.isArray(list) ? list.map((row) => ({ ...row, id: row.id || uid() })) : [];
+  }
+
+  function normalizeState(saved) {
+    const next = cloneState(DEFAULT_STATE);
+    if (!saved || typeof saved !== 'object') return next;
+    next.balances = {
+      checking: Number(saved.balances?.checking ?? next.balances.checking) || 0,
+      savings: Number(saved.balances?.savings ?? next.balances.savings) || 0
+    };
+    const income = ensureIds(saved.income);
+    const expenses = ensureIds(saved.expenses);
+    const goals = ensureIds(saved.goals);
+    const investments = ensureIds(saved.investments);
+    const debts = ensureIds(saved.debts);
+    next.income = income.length ? income : next.income;
+    next.expenses = expenses.length ? expenses : next.expenses;
+    next.goals = goals.length ? goals : next.goals;
+    next.investments = investments.length ? investments : next.investments;
+    next.debts = debts.length ? debts : next.debts;
+    return next;
+  }
+
+  async function loadBudgetState() {
+    try {
+      const response = await fetch('/api/steward/budget');
+      if (!response.ok) throw new Error('load failed');
+      const payload = await response.json();
+      if (payload.state) {
+        STATE = normalizeState(payload.state);
+        lastSavedAt = payload.updated_at || null;
+        setSaveStatus('Loaded Steward planner memory from SQLite' + (lastSavedAt ? ' · ' + lastSavedAt.slice(0, 19).replace('T', ' ') : ''), 'saved');
+      } else {
+        STATE = cloneState(DEFAULT_STATE);
+        setSaveStatus('Using starter planner data · edits will save to SQLite', 'idle');
+      }
+    } catch (error) {
+      STATE = cloneState(DEFAULT_STATE);
+      setSaveStatus('SQLite planner memory unavailable · using starter data for this session', 'error');
+    }
+  }
+
+  async function saveBudgetState() {
+    setSaveStatus('Saving Steward planner memory...', 'saving');
+    try {
+      const response = await fetch('/api/steward/budget', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ state: STATE })
+      });
+      if (!response.ok) throw new Error('save failed');
+      const payload = await response.json();
+      lastSavedAt = payload.updated_at || new Date().toISOString();
+      setSaveStatus('Saved to local SQLite · ' + lastSavedAt.slice(0, 19).replace('T', ' '), 'saved');
+    } catch (error) {
+      setSaveStatus('Could not save to SQLite. Keep this page open and try again.', 'error');
+    }
+  }
+
+  function queueSave() {
+    clearTimeout(saveTimer);
+    setSaveStatus('Unsaved changes...', 'dirty');
+    saveTimer = setTimeout(saveBudgetState, 650);
+  }
 
   // ---- Core math (mirrors the Excel formulas shown in the reference panel) ----
   function totals() {
@@ -200,6 +280,7 @@
     row[field] = t.value === '' ? 0 : Number(t.value);
     renderKPIs();
     if (kind === 'expense') renderExpenses();
+    queueSave();
   });
 
   root.addEventListener('click', (e) => {
@@ -207,34 +288,31 @@
     if (action === 'remove-income') {
       STATE.income = STATE.income.filter((r) => r.id !== e.target.dataset.id);
       renderIncome(); renderKPIs();
+      queueSave();
     }
     if (action === 'add-income') {
       const name = prompt('Income source name (e.g. Freelance, Bonus):');
-      if (name) { STATE.income.push({ id: uid(), name, amount: 0 }); renderIncome(); renderKPIs(); }
+      if (name) { STATE.income.push({ id: uid(), name, amount: 0 }); renderIncome(); renderKPIs(); queueSave(); }
     }
     if (action === 'add-goal') {
       const name = prompt('Goal name:'); if (!name) return;
       STATE.goals.push({ id: uid(), name, target: 1000, current: 0, targetDate: '' });
       renderGoals();
+      queueSave();
     }
     if (action === 'add-investment') {
       const name = prompt('Account name:'); if (!name) return;
       STATE.investments.push({ id: uid(), name, balance: 0, monthly: 0, annualReturnPct: 7 });
       renderInvestments();
+      queueSave();
     }
     if (action === 'add-debt') {
       const name = prompt('Debt name:'); if (!name) return;
       STATE.debts.push({ id: uid(), name, balance: 0, apr: 0, minPayment: 0 });
       renderDebts();
+      queueSave();
     }
   });
 
-  renderAll();
-
-  // TODO (Engineer, queued): replace this in-memory STATE with calls to
-  // POST /api/steward/budget and GET /api/steward/budget once Keeper's
-  // SQLite tables exist, so entries survive a page reload. Deliberately
-  // NOT using localStorage here — financial data shouldn't live only in
-  // the browser, and it should go through Sentinel's audit/approval path
-  // once it's anything more than locally-typed numbers.
+  loadBudgetState().then(renderAll);
 })();

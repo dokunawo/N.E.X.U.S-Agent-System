@@ -1,1 +1,1 @@
-"""N.E.X.U.S Dashboard MVP backend package."""
+"""R.A.M.B.O. Dashboard MVP backend package."""

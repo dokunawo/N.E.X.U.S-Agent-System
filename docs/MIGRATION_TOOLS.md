@@ -1,13 +1,13 @@
 # Migration Tools
 
-This file is the handoff bundle for continuing N.E.X.U.S from another AI or session.
+This file is the handoff bundle for continuing R.A.M.B.O. from another AI or session.
 
 ## Project Identity
 
-- Project: N.E.X.U.S
-- Brand line: Everything Connects Here.
-- Council surface: N.E.X.U.S home and the dedicated Round Table page
-- Primary goal: a voice-capable, multi-agent personal operating system with approvals, memory, learning, and financial stewardship.
+- Project: R.A.M.B.O.
+- Brand line: Autonomy. Precision. Execution.
+- Council surface: R.A.M.B.O. home and the dedicated Round Table page
+- Primary goal: a voice-capable, multi-Brain personal operating system with approvals, memory, learning, and financial stewardship.
 
 ## Current Live Surfaces
 
@@ -30,15 +30,16 @@ This file is the handoff bundle for continuing N.E.X.U.S from another AI or sess
 - [round-table/assets/style.css](C:/Users/dokun/Documents/Codex/Jarvis-Agent/round-table/assets/style.css)
 - [round-table/assets/core3d.js](C:/Users/dokun/Documents/Codex/Jarvis-Agent/round-table/assets/core3d.js)
 - [round-table/assets/app.js](C:/Users/dokun/Documents/Codex/Jarvis-Agent/round-table/assets/app.js)
+- [docs/RAMBO_BRAIN_PROMPTS.md](C:/Users/dokun/Documents/Codex/Jarvis-Agent/docs/RAMBO_BRAIN_PROMPTS.md)
 - [round-table/README.md](C:/Users/dokun/Documents/Codex/Jarvis-Agent/round-table/README.md)
 
 ## What Already Exists
 
-### N.E.X.U.S App
+### R.A.M.B.O. App
 
 - FastAPI backend running in mock mode without API keys.
 - SQLite memory for tasks, logs, approvals, learning, and finance.
-- Dashboard sections for approvals, learning, Steward finance, agents, and memory.
+- Dashboard sections for approvals, learning, Steward finance, Brains, and memory.
 - Approval endpoints:
   - `POST /api/approvals/{id}/approve`
   - `POST /api/approvals/{id}/reject`
@@ -51,23 +52,32 @@ This file is the handoff bundle for continuing N.E.X.U.S from another AI or sess
 
 ### The Round Table
 
-- `index.html` is now the centralized `N.E.X.U.S` home page.
+- `index.html` is now the centralized `R.A.M.B.O.` home page.
 - `round-table.html` is the dedicated council overview page.
-- Each agent has a separate page with avatar-based identity visuals.
-- Approvals and Learning have separate pages with their own orb panels.
+- Each Brain has a separate page with avatar-based identity visuals.
+- Approvals and Learning have separate pages with their own system node scenes.
+- Approvals and Learning now use dedicated 3D system node scenes with centered avatars, orbit labels, and cleaner HUD title capsules.
 - Steward has a manual-entry budget planner and a downloadable copy.
 - The home page now uses a single large globe section first, with Council data below it.
-- The home page includes a direct `View Council Members` button instead of duplicating the roster there.
-- The home page now includes a `N.E.X.U.S COMMAND SEAT` section below Council Data, carrying the old Overseer role, critical tier, task stats, core directives, and mission journal from the shared `nexus` agent record.
-- Globe nodes now open hover/click bubbles that show the agent's current work.
-- Round Table agents now orbit the globe instead of stacking into the center.
-- Each agent page now has one centered avatar scene with orbiting task stats.
-- Sidebar navigation now keeps `N.E.X.U.S` as a standalone home/overseer item, with only `Round Table` inside the `COUNCIL` group.
+- The home page includes a direct `View Brain Roster` button instead of duplicating the roster there.
+- The home page now includes a `R.A.M.B.O. COMMAND SEAT` section below Brain Data, carrying the old Overseer role, critical tier, task stats, core directives, and mission journal from the shared internal `nexus` record.
+- Globe nodes now open hover/click bubbles that show the Brain's current work.
+- Round Table Brains now orbit the globe instead of stacking into the center.
+- Each Brain page now has one centered avatar scene with orbiting task stats.
+- Sidebar navigation now keeps `R.A.M.B.O.` as a standalone home/overseer item, with only `Round Table` inside the `COUNCIL` group.
 - The globe/core animation renders on every page that uses `core-canvas`.
+- The shared `core3d.js` visual now includes an aura shell, denser particles, additive glow, and neural filaments for a more realistic futuristic look.
+- Council journals hydrate from SQLite through `GET /api/council/journals` when served by FastAPI.
+- Steward planner entries persist to local SQLite through `GET /api/steward/budget` and `PUT /api/steward/budget`.
+- R.A.M.B.O. home now has a Daily Briefing panel hydrated by `GET /api/briefing/daily`.
+- R.A.M.B.O. home now has a Devchain-inspired Operating Loop panel translated into the local Brain roster.
+- Visible branding is now R.A.M.B.O. — Responsive Autonomous Multi-Brain Operator.
+- The tactical UI palette now uses Midnight Black, Tactical Red, Steel Gray, Signal White, and Pulse Orange.
+- The daily briefing uses the boot phrase: `R.A.M.B.O. online. Systems synchronized. Standing by for your command.`
 
-## Agent Roster
+## Brain Roster
 
-- N.E.X.U.S
+- R.A.M.B.O.
 - Architect
 - Engineer
 - Seeker
@@ -99,27 +109,34 @@ This file is the handoff bundle for continuing N.E.X.U.S from another AI or sess
 5. `app/app/services/orchestrator.py`
 6. `round-table/build_pages.py`
 7. `round-table/data/agents.json`
+8. `docs/RAMBO_BRAIN_PROMPTS.md`
 
 ## Current State Summary
 
-- The core N.E.X.U.S backend is working.
+- The core R.A.M.B.O. backend is working.
 - The council UI has been imported and converted into a Codex-owned local site.
-- The home page now says `N.E.X.U.S` in bold and uses the Round Table globe as the central visual.
-- The standalone N.E.X.U.S home page now includes the old Overseer data below Council Data.
-- Each agent page includes the globe motif, a tailored avatar, and a short live-info list.
-- The sidebar now combines the old standalone/Overseer duplicate by keeping one standalone `N.E.X.U.S` item and removing the old `OVERSEER` group.
+- The home page now says `R.A.M.B.O.` in bold and uses the Round Table globe as the central visual.
+- The standalone R.A.M.B.O. home page now includes the old Overseer data below Brain Data.
+- Each Brain page includes the globe motif, a tailored avatar, and a short live-info list.
+- Brain mission journals now replace baked sample content with SQLite-backed live journal data at runtime.
+- The sidebar now combines the old standalone/Overseer duplicate by keeping one standalone `R.A.M.B.O.` item and removing the old `OVERSEER` group.
 - Steward has a downloadable HTML planner file in `round-table/downloads/steward-budget-planner.html`.
-- The latest handoff note is `docs/ROADMAP_12_2026-06-19_09-16-29.md`.
+- Steward's in-dashboard planner saves manual entries to local SQLite.
+- Daily briefing now reports greeting, Detroit time/day/date, weather fallback/live weather, Calendar connection status, Brain briefings, today's task focus, and operating loop guardrails.
+- `docs/RAMBO_BRAIN_PROMPTS.md` defines the scalable R.A.M.B.O. Brain identity, routing prompts, master persona, mission statement, branding kit, and loop guardrails.
+- The latest handoff note is `docs/ROADMAP_16_2026-06-20_06-05-41.md`.
 
 ## Recommended Next Steps
 
-1. Move the council journals from baked sample content into SQLite-backed live memory.
-2. Add live data panels to the N.E.X.U.S home page from actual task and approval records.
-3. Persist Steward planner entries into the backend instead of only static/downloadable pages.
-4. Wire the N.E.X.U.S command-seat stats and journal to live SQLite data.
-5. Add a reliable local server start/stop helper for the desktop workflow on port `8004`.
-6. Wire a lightweight export path for the budget planner if you want XLSX or CSV later.
-7. Continue into real integration work only after the approval boundary is ready.
+1. Add real Brain handoff/task-loop records so `agent_logs` fills the live journals automatically.
+2. Add `POST /api/workflows/dispatch` for low-risk Brain routing.
+3. Add a daily briefing history table so R.A.M.B.O. remembers each briefing it gave.
+4. Wire Calendar after Sentinel approval so the briefing can show real meetings.
+5. Add editable fields for savings goals and investments in Steward, not only add-card buttons.
+6. Add animated node trails between Brains during handoff dispatch.
+7. Add screenshot QA for desktop/mobile visual alignment.
+8. Add a reliable local server start/stop helper for the desktop workflow on port `8004`.
+9. Continue into real integration work only after the approval boundary is ready.
 
 ## Commands
 

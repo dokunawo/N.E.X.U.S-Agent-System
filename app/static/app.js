@@ -190,7 +190,7 @@ function renderLearning(learning = {}) {
     elements.learningList.innerHTML = `
       <div class="insight-empty">
         <strong>No learning signals yet</strong>
-        <p>N.E.X.U.S will learn from local goals first. Connected plugin learning stays approval-gated.</p>
+        <p>R.A.M.B.O. will learn from local goals first. Connected plugin learning stays approval-gated.</p>
       </div>
     `;
     return;
@@ -285,7 +285,7 @@ async function loadDashboard() {
     message: agent.task,
   })));
   renderSuggestions([
-    "Run a N.E.X.U.S status check.",
+    "Run a R.A.M.B.O. status check.",
     "Connect Calendar, Gmail, Notes, and Tasks first.",
     "Add voice after the dashboard and real data loop works.",
   ]);
@@ -294,7 +294,7 @@ async function loadDashboard() {
 }
 
 async function runGoal(goal) {
-  elements.summary.textContent = "N.E.X.U.S is routing the request...";
+  elements.summary.textContent = "R.A.M.B.O. is routing the request...";
   const result = await api("/api/run", {
     method: "POST",
     body: JSON.stringify({ goal }),

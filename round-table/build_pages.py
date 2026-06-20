@@ -2,7 +2,7 @@
 """
 build_pages.py — generates every page of The Round Table from data/agents.json.
 
-Run this any time agents.json changes (new journal entry, new agent, edited
+Run this any time agents.json changes (new journal entry, new Brain, edited
 description) instead of hand-editing HTML. Requires nothing but Python 3
 (no pip installs).
 
@@ -108,16 +108,46 @@ def render_agent_scene(agent):
     </section>"""
 
 
+def render_system_scene(page):
+    bubbles = []
+    angles = [-70, -18, 28, 76]
+    for item, angle in zip(system_hub_items(page), angles):
+        bubbles.append(
+            f"""<div class="agent-orbit-bubble system-orbit-bubble" style="--orbit-angle:{angle}deg;">
+              <div>
+                <span>{esc(item['label'])}</span>
+                <strong>{esc(item['value'])}</strong>
+              </div>
+            </div>"""
+        )
+    return f"""
+    <section class="agent-scene system-scene">
+      <div class="agent-node-stage system-node-stage">
+        <canvas id="core-canvas" class="core-canvas"></canvas>
+        <div class="ring-static"></div>
+        <div class="ring-static r2"></div>
+        <div class="agent-scene-core system-scene-core">
+          {render_avatar(page, "lg")}
+          <div class="system-core-label">
+            <strong>{esc(page["name"])}</strong>
+            <span>{esc(page["title"])}</span>
+          </div>
+        </div>
+        <div class="agent-scene-orbits system-scene-orbits">{''.join(bubbles)}</div>
+      </div>
+    </section>"""
+
+
 def render_sidebar(data, active_id, base):
     agents = sorted(data["agents"], key=lambda a: a["order"])
     specialists = [a for a in agents if a["id"] != "nexus"]
     sys_pages = data["systemPages"]
 
     items = []
-    items.append(nav_link(f"{base}index.html", "N.E.X.U.S", "#00e5ff", active_id in ("home", "nexus"), dot=False, icon_text="NX"))
+    items.append(nav_link(f"{base}index.html", "R.A.M.B.O.", "#FF2E2E", active_id in ("home", "nexus"), dot=False, icon_text="RB"))
     items.append('<div class="nav-group-label">COUNCIL</div>')
-    items.append(nav_link(f"{base}round-table.html", "Round Table", "#00e5ff", active_id == "round-table", dot=False, icon_text="RT"))
-    items.append('<div class="nav-group-label">SPECIALISTS</div>')
+    items.append(nav_link(f"{base}round-table.html", "Round Table", "#FF7A00", active_id == "round-table", dot=False, icon_text="RT"))
+    items.append('<div class="nav-group-label">BRAINS</div>')
     for a in specialists:
         items.append(nav_link(f"{base}agents/{a['id']}.html", a["name"], a["color"], active_id == a["id"], a["permissionTier"], icon_html=render_avatar(a, "nav")))
     items.append('<div class="nav-group-label">SYSTEM</div>')
@@ -126,8 +156,8 @@ def render_sidebar(data, active_id, base):
 
     return f"""<aside class="sidebar">
   <div class="brand">
-    <div class="brand-mark">N</div>
-    <div class="brand-text"><div class="t1">N.E.X.U.S</div></div>
+    <div class="brand-mark">R</div>
+    <div class="brand-text"><div class="t1">R.A.M.B.O.</div></div>
   </div>
   <nav>{''.join(items)}</nav>
 </aside>"""
@@ -142,7 +172,7 @@ def render_topbar(crumb, page_title):
     return f"""<div class="topbar">
     {crumb_html}
     <div style="display:flex;align-items:center;">
-      <div class="status-pill"><span class="dot"></span>ALL SYSTEMS NOMINAL</div>
+      <div class="status-pill"><span class="dot"></span>R.A.M.B.O. ONLINE</div>
       <div class="clock" id="sys-clock">--:--:--</div>
     </div>
   </div>"""
@@ -150,7 +180,7 @@ def render_topbar(crumb, page_title):
 
 def render_footer(build_date):
     return f"""<footer class="foot">
-    <span>N.E.X.U.S &mdash; Everything Connects Here.</span>
+    <span>R.A.M.B.O. &mdash; Autonomy. Precision. Execution.</span>
     <span>Build {esc(build_date)}</span>
   </footer>"""
 
@@ -207,7 +237,7 @@ def render_orb_panel(title, subtitle, items, size_class="medium", list_class="or
         <div class="orb-satellites">{''.join(satellites)}</div>
         <div class="ring-static"></div>
         <div class="ring-static r2"></div>
-        <div class="table-center"><div class="label mono">N.E.X.U.S</div></div>
+        <div class="table-center"><div class="label mono">R.A.M.B.O.</div></div>
       </div>
       <div class="{list_class}">
         {item_rows}
@@ -241,9 +271,10 @@ def system_hub_items(page):
     ]
 
 
-def render_journal_column(title_cls, label, entries, empty_msg):
+def render_journal_column(title_cls, label, entries, empty_msg, live_key=None):
+    live_attr = f' data-journal-column="{esc(live_key)}"' if live_key else ""
     if not entries:
-        return f'<div class="journal-col {title_cls}"><h4>{label}</h4><div class="j-empty">{esc(empty_msg)}</div></div>'
+        return f'<div class="journal-col {title_cls}"{live_attr}><h4>{label}</h4><div class="j-empty">{esc(empty_msg)}</div></div>'
     rows = []
     for e in entries:
         date_html = f'<div class="j-date">{esc(e["date"])}</div>' if e.get("date") else ""
@@ -251,16 +282,16 @@ def render_journal_column(title_cls, label, entries, empty_msg):
       <div class="j-title">{esc(e["title"])}</div>
       <div class="j-note">{esc(e["note"])}</div>
     </div>""")
-    return f'<div class="journal-col {title_cls}"><h4>{label}</h4>{"".join(rows)}</div>'
+    return f'<div class="journal-col {title_cls}"{live_attr}><h4>{label}</h4>{"".join(rows)}</div>'
 
 
 def render_agent_page(agent, data, out_dir):
     base = "../"
     j = agent["journal"]
-    journal_html = f"""<div class="journal-cols">
-    {render_journal_column("completed", "COMPLETED", j.get("completed", []), "Nothing logged yet.")}
-    {render_journal_column("inprogress", "IN PROGRESS", j.get("inProgress", []), "Nothing in motion right now.")}
-    {render_journal_column("queued", "QUEUED", j.get("queued", []), "Queue is empty.")}
+    journal_html = f"""<div class="journal-cols" data-agent-journal="{agent["id"]}">
+    {render_journal_column("completed", "COMPLETED", j.get("completed", []), "Nothing logged yet.", "completed")}
+    {render_journal_column("inprogress", "IN PROGRESS", j.get("inProgress", []), "Nothing in motion right now.", "inProgress")}
+    {render_journal_column("queued", "QUEUED", j.get("queued", []), "Queue is empty.", "queued")}
   </div>"""
 
     directives_html = "".join(f"<li>{esc(d)}</li>" for d in agent["directives"])
@@ -350,10 +381,11 @@ def render_budget_section():
 
       <div class="note-callout">
         <b>Manual entry only.</b> Nothing here connects to a real bank, card, or Notion account yet &mdash;
-        by design, per Sentinel's permission rules. Numbers typed here stay in this browser tab until
-        a backend save endpoint exists (see README.md). Seeded balances below match the
+        by design, per Sentinel's permission rules. Numbers typed here save to local SQLite through
+        R.A.M.B.O. so the planner survives reloads. Seeded balances below match the
         "Configure" section of your existing Google Sheet.
       </div>
+      <div class="planner-save-status" id="budget-save-status">Loading Steward planner memory...</div>
 
       <div class="kpi-row">
         <div class="kpi-card"><div class="lbl">Total Income</div><div class="val neutral" id="kpi-income">$0.00</div></div>
@@ -442,13 +474,7 @@ def render_budget_download_page(data, out_path):
 def render_system_page(page, data, out_dir):
     base = "../"
     style = f'style="--node-color:{page["color"]};--accent:{page["color"]}"'
-    orb_html = render_orb_panel(
-        f"{page['name']} node",
-        page["title"],
-        system_hub_items(page),
-        size_class="compact",
-        list_class="orb-list compact",
-    )
+    system_node_html = render_system_scene(page)
 
     if page["id"] == "approvals":
         rows = "".join(f"""<div class="j-entry"><div class="j-title">{esc(q["title"])}</div><div class="j-note">{esc(q["note"])}</div></div>""" for q in page["queue"])
@@ -462,7 +488,7 @@ def render_system_page(page, data, out_dir):
     body = f"""{render_sidebar(data, page["id"], base)}
   <main class="main" {style}>
     {render_topbar("THE ROUND TABLE", page["name"])}
-    {orb_html}
+    {system_node_html}
     <div class="page-head fade-in">
       {render_avatar(page, "lg")}
       <div>
@@ -474,7 +500,7 @@ def render_system_page(page, data, out_dir):
     {render_footer(data["meta"]["buildDate"])}
   </main>"""
 
-    html = page_shell(page["name"], base, body)
+    html = page_shell(page["name"], base, body, extra_scripts=f'{THREEJS_CDN}\n<script src="../assets/core3d.js"></script>')
     with open(os.path.join(out_dir, f'{page["id"]}.html'), "w", encoding="utf-8") as f:
         f.write(html)
 
@@ -505,10 +531,10 @@ def render_home_page(data, out_path):
     center_stats = center_agent["stats"]
     center_journal = center_agent["journal"]
     center_directives = "".join(f"<li>{esc(d)}</li>" for d in center_agent["directives"])
-    center_journal_html = f"""<div class="journal-cols compact-journal">
-    {render_journal_column("completed", "RECENTLY COMPLETED", center_journal.get("completed", []), "Nothing logged yet.")}
-    {render_journal_column("inprogress", "IN PROGRESS", center_journal.get("inProgress", []), "Nothing in motion right now.")}
-    {render_journal_column("queued", "QUEUED", center_journal.get("queued", []), "Queue is empty.")}
+    center_journal_html = f"""<div class="journal-cols compact-journal" data-agent-journal="{center_agent["id"]}">
+    {render_journal_column("completed", "RECENTLY COMPLETED", center_journal.get("completed", []), "Nothing logged yet.", "completed")}
+    {render_journal_column("inprogress", "IN PROGRESS", center_journal.get("inProgress", []), "Nothing in motion right now.", "inProgress")}
+    {render_journal_column("queued", "QUEUED", center_journal.get("queued", []), "Queue is empty.", "queued")}
   </div>"""
     agent_rows = "".join(
         f"""<tr>
@@ -557,20 +583,46 @@ def render_home_page(data, out_path):
 
     body = f"""{render_sidebar(data, "home", "")}
   <main class="main nexus-home">
-    {render_topbar("", "N.E.X.U.S")}
+    {render_topbar("", "R.A.M.B.O.")}
+
+    <section class="daily-briefing-panel fade-in" data-daily-briefing>
+      <div class="daily-briefing-head">
+        <div>
+          <div class="section-title">DAILY BRIEFING</div>
+          <h2 data-briefing-greeting>R.A.M.B.O. is coming online...</h2>
+        </div>
+        <div class="briefing-pill" data-briefing-clock>Detroit status pending</div>
+      </div>
+      <div class="briefing-grid">
+        <div class="briefing-card"><span>Weather</span><strong data-briefing-weather>Loading Detroit weather...</strong></div>
+        <div class="briefing-card"><span>Calendar</span><strong data-briefing-calendar>Calendar not checked yet</strong></div>
+        <div class="briefing-card"><span>Today</span><strong data-briefing-focus>Preparing daily focus...</strong></div>
+        <div class="briefing-card"><span>Approvals</span><strong data-briefing-approvals>Checking Sentinel queue...</strong></div>
+      </div>
+      <div class="briefing-body">
+        <div>
+          <div class="section-title small">BRAIN BRIEFING</div>
+          <div class="briefing-agent-list" data-briefing-agents></div>
+        </div>
+        <div>
+          <div class="section-title small">TODAY'S OPERATING LOOP</div>
+          <div class="briefing-task-list" data-briefing-tasks></div>
+        </div>
+      </div>
+    </section>
 
     <div class="home-banner fade-in">
       <div class="home-title">
-        <h1><b>N.E.X.U.S</b></h1>
+        <h1><b>R.A.M.B.O.</b></h1>
       </div>
-      <p>The central command surface for the whole system. The globe stays in the middle, while each agent's current work, queue, and success signal sits around it.</p>
+      <p>Responsive Autonomous Multi-Brain Operator. A tactical command surface that routes Daniel's intent through specialized Brains, then synthesizes one clear answer.</p>
     </div>
 
     <div class="home-layout landscape">
       <section class="orb-panel large home-orb">
         <div class="orb-panel-head">
-          <div class="orb-panel-title">N.E.X.U.S</div>
-          <div class="orb-panel-subtitle">Central command globe</div>
+          <div class="orb-panel-title">R.A.M.B.O.</div>
+          <div class="orb-panel-subtitle">Tactical command core</div>
         </div>
         <div class="table-stage home-stage">
           <canvas id="core-canvas" class="core-canvas"></canvas>
@@ -581,31 +633,46 @@ def render_home_page(data, out_path):
           <div class="ring-static r2"></div>
           <div class="table-center">
             {render_avatar(center_agent, "lg")}
-            <div class="label mono">N.E.X.U.S</div>
+            <div class="label mono">R.A.M.B.O.</div>
           </div>
           <div class="home-node-wrap">{''.join(node_bits)}</div>
         </div>
       </section>
 
       <section class="panel-card council-panel">
-        <div class="section-title">COUNCIL DATA</div>
+        <div class="section-title">BRAIN DATA</div>
         <div class="council-overview">
           <div class="mini-stat"><span>Seats</span><strong>11</strong></div>
           <div class="mini-stat"><span>Mode</span><strong>{esc(data["meta"]["tagline"])}</strong></div>
           <div class="mini-stat"><span>Learning</span><strong>Local memory + approvals</strong></div>
           <div class="mini-stat"><span>Steward</span><strong>Manual finance tracking</strong></div>
         </div>
-        <a class="home-cta" href="round-table.html">View Council Members</a>
+        <a class="home-cta" href="round-table.html">View Brain Roster</a>
         <table class="home-table">
           <thead>
-            <tr><th>Agent</th><th>Done</th><th>Queued</th><th>Signal</th><th>Rate</th></tr>
+            <tr><th>Brain</th><th>Done</th><th>Queued</th><th>Signal</th><th>Rate</th></tr>
           </thead>
           <tbody>{agent_rows}</tbody>
         </table>
       </section>
 
+      <section class="workflow-panel fade-in">
+        <div class="section-title">OPERATING LOOP</div>
+        <div class="workflow-intro">
+          Devchain-style routing translated into R.A.M.B.O.: each request moves through capture, planning, validation, build, review, and memory. Sensitive actions still stop at Sentinel.
+        </div>
+        <div class="workflow-steps" data-workflow-steps>
+          <div class="workflow-step"><span>01</span><strong>R.A.M.B.O.</strong><p>Capture the request and define success.</p></div>
+          <div class="workflow-step"><span>02</span><strong>Architect</strong><p>Plan the sequence and dependencies.</p></div>
+          <div class="workflow-step"><span>03</span><strong>Seeker + Analyst</strong><p>Validate facts, data, and assumptions.</p></div>
+          <div class="workflow-step"><span>04</span><strong>Engineer + Link</strong><p>Build the local capability or integration.</p></div>
+          <div class="workflow-step"><span>05</span><strong>Sentinel</strong><p>Review risk and approval boundaries.</p></div>
+          <div class="workflow-step"><span>06</span><strong>Keeper + Pilot</strong><p>Record the handoff and queue next work.</p></div>
+        </div>
+      </section>
+
       <section class="nexus-overseer-panel fade-in" style="--node-color:{center_agent["color"]};--accent:{center_agent["color"]}">
-        <div class="section-title">N.E.X.U.S COMMAND SEAT</div>
+        <div class="section-title">R.A.M.B.O. COMMAND SEAT</div>
         <div class="nexus-overseer-grid">
           <div class="nexus-overseer-identity">
             {render_avatar(center_agent, "lg")}
@@ -638,7 +705,7 @@ def render_home_page(data, out_path):
     {render_footer(data["meta"]["buildDate"])}
   </main>"""
 
-    html = page_shell("N.E.X.U.S", "", body, extra_scripts=f'{THREEJS_CDN}\n<script src="assets/core3d.js"></script>')
+    html = page_shell("R.A.M.B.O.", "", body, extra_scripts=f'{THREEJS_CDN}\n<script src="assets/core3d.js"></script>')
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(html)
 
@@ -670,19 +737,19 @@ def render_round_table_page(data, out_path):
       <div class="hero-head">
         <div class="eyebrow">COUNCIL / ROUND TABLE</div>
         <h1>ROUND TABLE</h1>
-        <p>Eleven seats, one overseer, ten specialists. Each label in the sidebar now carries an icon, and each page carries the same globe motif so the whole council feels like one machine.</p>
+        <p>One operator, ten specialized Brains. The Round Table shows who is active, what each Brain owns, and how the tactical core keeps the whole system synchronized.</p>
       </div>
       <div class="table-stage">
         <canvas id="core-canvas" class="core-canvas"></canvas>
         <div class="ring-static"></div>
         <div class="ring-static r2"></div>
-        <div class="table-center">{render_avatar(next(a for a in agents if a["id"] == "nexus"), "lg")}<div class="label mono">N.E.X.U.S</div></div>
+        <div class="table-center">{render_avatar(next(a for a in agents if a["id"] == "nexus"), "lg")}<div class="label mono">R.A.M.B.O.</div></div>
         <div class="node-wrap">{''.join(nodes_html)}</div>
       </div>
     </div>
 
     <div class="section fade-in">
-      <div class="section-title">FULL ROSTER</div>
+      <div class="section-title">BRAIN ROSTER</div>
       <div class="agent-grid">{cards_html}</div>
     </div>
 
