@@ -95,7 +95,7 @@ Approvals should support spoken confirmation, one-click approval, and written co
 - Memory: SQLite first.
 - Data: mock data until real integrations are connected.
 - OpenAI: optional bridge that activates only when `OPENAI_API_KEY` is set.
-- Visual direction: midnight-black command center, steel panels, Tactical Red primary accents, Pulse Orange highlights, readable text.
+- Visual direction: near-black MK III command center, steel panels, amber/gold primary accents, soft glow highlights, readable text.
 
 ## Verification
 

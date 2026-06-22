@@ -76,7 +76,7 @@ function renderChart(series) {
   const scaleY = (height - padding * 2) / (max - min);
 
   context.clearRect(0, 0, width, height);
-  context.fillStyle = "#121923";
+  context.fillStyle = "#111318";
   context.fillRect(0, 0, width, height);
 
   context.strokeStyle = "rgba(128, 218, 230, 0.18)";
@@ -96,7 +96,7 @@ function renderChart(series) {
     label: series[index].label,
   }));
 
-  context.strokeStyle = "#18d6e8";
+  context.strokeStyle = "#e8b15a";
   context.lineWidth = 4;
   context.beginPath();
   points.forEach((point, index) => {
@@ -109,12 +109,12 @@ function renderChart(series) {
   context.stroke();
 
   points.forEach((point) => {
-    context.fillStyle = "#34d399";
+    context.fillStyle = "#ffd98a";
     context.beginPath();
     context.arc(point.x, point.y, 5, 0, Math.PI * 2);
     context.fill();
 
-    context.fillStyle = "#9aa9b8";
+    context.fillStyle = "#d0d0d0";
     context.font = "700 15px Segoe UI, sans-serif";
     context.textAlign = "center";
     context.fillText(point.label, point.x, height - 8);

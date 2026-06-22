@@ -26,18 +26,18 @@
     window.addEventListener('resize', resize);
 
     scene.add(new THREE.AmbientLight(0xf2f2f2, 0.32));
-    const light = new THREE.PointLight(0xff2e2e, 1.35, 8);
+    const light = new THREE.PointLight(0xe8b15a, 1.35, 8);
     light.position.set(1.7, 1.4, 2.2);
     scene.add(light);
 
     const coreGeo = new THREE.IcosahedronGeometry(1.15, 2);
-    const coreMat = new THREE.MeshBasicMaterial({ color: 0xff2e2e, wireframe: true, transparent: true, opacity: 0.84 });
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0xe8b15a, wireframe: true, transparent: true, opacity: 0.84 });
     const core = new THREE.Mesh(coreGeo, coreMat);
     scene.add(core);
 
     const auraGeo = new THREE.SphereGeometry(1.55, 48, 32);
     const auraMat = new THREE.MeshBasicMaterial({
-      color: 0xff2e2e,
+      color: 0xe8b15a,
       transparent: true,
       opacity: 0.055,
       blending: THREE.AdditiveBlending,
@@ -48,7 +48,7 @@
 
     const glowGeo = new THREE.IcosahedronGeometry(1.04, 2);
     const glowMat = new THREE.MeshBasicMaterial({
-      color: 0xff7a00,
+      color: 0xffd98a,
       transparent: true,
       opacity: 0.075,
       blending: THREE.AdditiveBlending,
@@ -58,13 +58,13 @@
     scene.add(glow);
 
     const ring1Geo = new THREE.TorusGeometry(1.9, 0.006, 8, 120);
-    const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xff2e2e, transparent: true, opacity: 0.38 });
+    const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xe8b15a, transparent: true, opacity: 0.38 });
     const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
     ring1.rotation.x = Math.PI / 2.2;
     scene.add(ring1);
 
     const ring2Geo = new THREE.TorusGeometry(2.25, 0.005, 8, 120);
-    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xff7a00, transparent: true, opacity: 0.26 });
+    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0xffd98a, transparent: true, opacity: 0.26 });
     const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
     ring2.rotation.x = Math.PI / 1.6;
     ring2.rotation.y = Math.PI / 5;
@@ -88,7 +88,7 @@
     }
     filamentGeo.setAttribute('position', new THREE.BufferAttribute(filamentPositions, 3));
     const filamentMat = new THREE.LineBasicMaterial({
-      color: 0xffa14d,
+      color: 0xffd98a,
       transparent: true,
       opacity: 0.18,
       blending: THREE.AdditiveBlending,

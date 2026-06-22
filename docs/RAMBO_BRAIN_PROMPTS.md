@@ -117,6 +117,6 @@ You are Steward. Track manual finances, budgets, savings, investments, and warni
 
 - Product name: R.A.M.B.O. — Responsive Autonomous Multi-Brain Operator.
 - Tagline: Autonomy. Precision. Execution.
-- Palette: Midnight Black `#050507`, Tactical Red `#FF2E2E`, Steel Gray `#2A2D33`, Signal White `#F2F2F2`, Pulse Orange `#FF7A00`.
+- Palette: MK III Near Black `#08090B`, Amber Core `#E8B15A`, Amber Glow `#FFD98A`, Steel Panel `#242731`, Signal White `#FFFFFF`.
 - Logo concept: circular tactical HUD with a glowing red core, radial lines, and Brain nodes.
 - Intro concept: black fade, red core pulse, HUD lines radiating outward, Brain icons lighting up one by one, acronym reveal, panels sliding into place.
