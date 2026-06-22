@@ -305,6 +305,29 @@ def render_agent_page(agent, data, out_dir):
       <a class="download-link" href="../downloads/steward-budget-planner.html" download>Download Steward budget planner</a>
     </div>"""
 
+    # Sentinel gets an inline Approval Board sourced from the approvals system page
+    approval_board_html = ""
+    if agent["id"] == "sentinel":
+        approvals_page = next((p for p in data.get("systemPages", []) if p["id"] == "approvals"), None)
+        if approvals_page:
+            approved_rows = "".join(
+                f"""<div class="j-entry"><div class="j-date">{esc(d["date"])}</div><div class="j-title">{esc(d["title"])}</div><div class="j-note">{esc(d["decision"])}</div></div>"""
+                for d in approvals_page.get("recentDecisions", [])
+            ) or '<div class="j-entry j-empty">No approvals on record.</div>'
+            queued_rows = "".join(
+                f"""<div class="j-entry"><div class="j-title">{esc(q["title"])}</div><div class="j-note">{esc(q["note"])}</div></div>"""
+                for q in approvals_page.get("queue", [])
+                if q.get("status") == "pending"
+            ) or '<div class="j-entry j-empty">No requests queued.</div>'
+            approval_board_html = f"""<div class="section fade-in">
+      <div class="section-title">APPROVAL BOARD</div>
+      <div class="journal-cols">
+        <div class="journal-col queued"><h4>QUEUED</h4>{queued_rows}</div>
+        <div class="journal-col completed"><h4>APPROVED</h4>{approved_rows}</div>
+        <div class="journal-col inprogress"><h4>DENIED</h4><div class="j-entry j-empty">No denied requests on record.</div></div>
+      </div>
+    </div>"""
+
     style = f'style="--node-color:{agent["color"]};--accent:{agent["color"]}"'
 
     body = f"""{render_sidebar(data, agent["id"], base)}
@@ -335,6 +358,8 @@ def render_agent_page(agent, data, out_dir):
       <div class="section-title">CORE DIRECTIVES</div>
       <ul class="directives">{directives_html}</ul>
     </div>
+
+    {approval_board_html}
 
     <div class="section fade-in">
       <div class="section-title">MISSION JOURNAL</div>
@@ -477,10 +502,22 @@ def render_system_page(page, data, out_dir):
     system_node_html = render_system_scene(page)
 
     if page["id"] == "approvals":
-        rows = "".join(f"""<div class="j-entry"><div class="j-title">{esc(q["title"])}</div><div class="j-note">{esc(q["note"])}</div></div>""" for q in page["queue"])
-        decisions = "".join(f"""<div class="j-entry"><div class="j-date">{esc(d["date"])}</div><div class="j-title">{esc(d["title"])}</div><div class="j-note">{esc(d["decision"])}</div></div>""" for d in page["recentDecisions"])
-        content = f"""<div class="section fade-in"><div class="section-title">PENDING QUEUE</div><div class="journal-col">{rows}</div></div>
-    <div class="section fade-in"><div class="section-title">RECENT DECISIONS</div><div class="journal-col">{decisions}</div></div>"""
+        queued_rows = "".join(
+            f"""<div class="j-entry"><div class="j-title">{esc(q["title"])}</div><div class="j-note">{esc(q["note"])}</div></div>"""
+            for q in page["queue"]
+        ) or '<div class="j-entry j-empty">No requests queued.</div>'
+        approved_rows = "".join(
+            f"""<div class="j-entry"><div class="j-date">{esc(d["date"])}</div><div class="j-title">{esc(d["title"])}</div><div class="j-note">{esc(d["decision"])}</div></div>"""
+            for d in page["recentDecisions"]
+        ) or '<div class="j-entry j-empty">No approvals on record.</div>'
+        content = f"""<div class="section fade-in">
+      <div class="section-title">APPROVAL BOARD</div>
+      <div class="journal-cols">
+        <div class="journal-col queued"><h4>QUEUED</h4>{queued_rows}</div>
+        <div class="journal-col completed"><h4>APPROVED</h4>{approved_rows}</div>
+        <div class="journal-col inprogress"><h4>DENIED</h4><div class="j-entry j-empty">No denied requests on record.</div></div>
+      </div>
+    </div>"""
     else:
         entries = "".join(f"""<div class="j-entry"><div class="j-date">{esc(e["date"])}</div><div class="j-title">{esc(e["title"])}</div><div class="j-note">{esc(e["note"])}</div></div>""" for e in page["entries"])
         content = f"""<div class="section fade-in"><div class="section-title">RECENT LEARNINGS</div><div class="journal-col">{entries}</div></div>"""
@@ -723,11 +760,26 @@ def render_round_table_page(data, out_path):
         x = 50 + radius * math.cos(rad)
         y = 50 + radius * math.sin(rad)
         nodes_html.append(
-            f'<div class="node node-orbit" style="left:{x:.2f}%;top:{y:.2f}%;--node-color:{a["color"]};--orbit-delay:{i * 0.55:.2f}s;--orbit-radius:{28 + (i % 3) * 6}px">'
-            f'{render_avatar(a, "sm")}<div class="node-label">{esc(a["name"])}</div></div>'
+            f'<a class="node node-orbit" href="agents/{a["id"]}.html" style="left:{x:.2f}%;top:{y:.2f}%;--node-color:{a["color"]};--orbit-delay:{i * 0.55:.2f}s;--orbit-radius:{28 + (i % 3) * 6}px">'
+            f'{render_avatar(a, "sm")}<div class="node-label">{esc(a["name"])}</div></a>'
         )
 
     cards_html = "".join(render_agent_card(a) for a in agents)
+
+    sys_pages = data["systemPages"]
+    system_cards_html = "".join(
+        f"""<a class="agent-card" href="system/{s['id']}.html" style="--node-color:{s['color']}">
+      <div class="ac-top">
+        {render_avatar(s, "sm")}
+        <div>
+          <h3>{esc(s['name'])}</h3>
+          <div class="ac-title">{esc(s['title'])}</div>
+        </div>
+      </div>
+      <p>{esc(s['description'])}</p>
+    </a>"""
+        for s in sys_pages
+    )
 
     body = f"""{render_sidebar(data, "round-table", base)}
   <main class="main">
@@ -751,6 +803,11 @@ def render_round_table_page(data, out_path):
     <div class="section fade-in">
       <div class="section-title">BRAIN ROSTER</div>
       <div class="agent-grid">{cards_html}</div>
+    </div>
+
+    <div class="section fade-in">
+      <div class="section-title">SYSTEM</div>
+      <div class="agent-grid">{system_cards_html}</div>
     </div>
 
     {render_footer(data["meta"]["buildDate"])}

@@ -166,8 +166,14 @@
         <div class="summary">A cross-Brain view of everything waiting on Sir's sign-off. Anything that spends money, sends a message, deletes a file, or touches a new account lands here before it happens — owned by Sentinel, visible to every Brain.</div>
       </div>
     </div>
-    <div class="section fade-in"><div class="section-title">PENDING QUEUE</div><div class="journal-col"><div class="j-entry"><div class="j-title">None pending</div><div class="j-note">No Brain has a request waiting on approval right now. This view will populate live once Sentinel's audit log (Keeper) is wired in.</div></div></div></div>
-    <div class="section fade-in"><div class="section-title">RECENT DECISIONS</div><div class="journal-col"><div class="j-entry"><div class="j-date">2026-06-17</div><div class="j-title">Steward manual-entry mode</div><div class="j-note">Auto-cleared — no money moved, no account connected, no approval required.</div></div></div></div>
+    <div class="section fade-in">
+      <div class="section-title">APPROVAL BOARD</div>
+      <div class="journal-cols">
+        <div class="journal-col queued"><h4>QUEUED</h4><div class="j-entry"><div class="j-title">None pending</div><div class="j-note">No Brain has a request waiting on approval right now. This view will populate live once Sentinel's audit log (Keeper) is wired in.</div></div></div>
+        <div class="journal-col completed"><h4>APPROVED</h4><div class="j-entry"><div class="j-date">2026-06-17</div><div class="j-title">Steward manual-entry mode</div><div class="j-note">Auto-cleared — no money moved, no account connected, no approval required.</div></div></div>
+        <div class="journal-col inprogress"><h4>DENIED</h4><div class="j-entry j-empty">No denied requests on record.</div></div>
+      </div>
+    </div>
     <footer class="foot">
     <span>R.A.M.B.O. &mdash; Autonomy. Precision. Execution.</span>
     <span>Build 2026-06-19</span>
